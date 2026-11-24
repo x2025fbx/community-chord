@@ -13,15 +13,15 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
-      <a class="brand" href="#home" aria-label="Community Chord home">
+      <a class="brand" href="index.html#home" aria-label="Community Chord home">
         <span class="brand-mark" aria-hidden="true">♫</span>
         <span>community<span class="brand-light">chord</span></span>
       </a>
       <nav class="main-nav" aria-label="Main navigation">
-        <a class="nav-link is-active" href="#home">Home</a>
+        <a class="nav-link is-active" id="home-nav" href="#home">Home</a>
         <a class="nav-link" href="#discover">Discover Musicians</a>
-        <a class="nav-link" href="#communities">Communities</a>
-        <a class="nav-link" href="#events">Events</a>
+        <a class="nav-link" id="communities-nav" href="#communities">Communities</a>
+        <a class="nav-link" id="events-nav" href="#events">Events</a>
         <a class="nav-link" href="#profile">My Profile</a>
         <a class="button button-primary header-membership" href="#communities">Membership</a>
         <button class="button button-primary header-account-button" type="button" data-account-action="signup">Sign up</button>
@@ -113,7 +113,7 @@
             <h2 id="communities-title">Better <span>together.</span></h2>
             <p class="section-subtitle">Small scenes, big energy. There’s a place for your sound.</p>
           </div>
-          <a class="text-button" href="#communities">All communities <span aria-hidden="true">→</span></a>
+          <a class="text-button" href="index.html?view=communities#communities">All communities <span aria-hidden="true">→</span></a>
         </div>
         <div class="community-grid" id="community-list"></div>
       </section>
@@ -122,7 +122,7 @@
         <div class="events-panel" id="events" aria-labelledby="events-title">
           <div class="section-heading compact-heading">
             <div><p class="eyebrow">OUT IN THE WORLD</p><h2 id="events-title">Coming up <span>near you.</span></h2></div>
-            <a class="text-button" href="#events">All events <span aria-hidden="true">→</span></a>
+            <a class="text-button" href="index.html?view=events#events">All events <span aria-hidden="true">→</span></a>
           </div>
           <div class="event-list" id="event-list"></div>
         </div>
@@ -155,7 +155,7 @@
     </main>
 
     <footer class="site-footer">
-      <a class="brand footer-brand" href="#home"><span class="brand-mark" aria-hidden="true">♫</span><span>community<span class="brand-light">chord</span></span></a>
+      <a class="brand footer-brand" href="index.html#home"><span class="brand-mark" aria-hidden="true">♫</span><span>community<span class="brand-light">chord</span></span></a>
       <p>Made for the love of making music.</p>
       <span class="footer-note">A community prototype · Sign up to create a profile</span>
     </footer>

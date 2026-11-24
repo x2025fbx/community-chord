@@ -52,6 +52,15 @@ button { color: inherit; }
 .online-dot { width: 7px; height: 7px; display: inline-block; flex: 0 0 auto; border-radius: 50%; background: #79d6a4; box-shadow: 0 0 9px #79d6a466; }
 
 main { max-width: 1200px; margin: auto; padding: 0 26px; }
+body[data-browse="communities"] main > :not(#communities),
+body[data-browse="events"] main > :not(.lower-grid) { display: none; }
+body[data-browse] .main-nav .nav-link:not(#home-nav):not(#communities-nav):not(#events-nav),
+body[data-browse] .header-membership,
+body[data-browse] .header-profile { display: none; }
+body[data-browse="communities"] .community-section { padding-top: 62px; }
+body[data-browse="events"] .lower-grid { display: block; }
+body[data-browse="events"] .collab-panel { display: none; }
+body[data-browse="events"] .events-panel { padding: 62px 0; }
 .hero { min-height: 520px; padding: 70px 0 65px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 65px; align-items: center; }
 .eyebrow { margin: 0 0 13px; color: #b7a3ef; font-size: 10px; font-weight: 700; letter-spacing: 1.7px; }
 .live-pulse { width: 7px; height: 7px; margin: 0 8px 1px 0; display: inline-block; background: #72d9a8; border-radius: 50%; box-shadow: 0 0 0 4px #72d9a81f; }

@@ -2,9 +2,9 @@
 
 Keep this up to date as you go — a few lines per work session is enough. It's much harder to reconstruct at the end.
 
-**Team name:**
-**Startup name:**
-**Live site link:**
+**Team name:** Nicholas the musician
+**Startup name:** Community chord
+**Live site link:** https://x2025fbx.github.io/community-chord/
 
 ---
 

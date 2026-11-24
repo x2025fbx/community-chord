@@ -5,9 +5,22 @@
   const rsvps = new Set();
   const accountStorageKey = "communityChordAccounts";
   const accountSessionStorageKey = "communityChordActiveAccount";
+  const browseView = new URLSearchParams(window.location.search).get("view");
   let currentAccount = null;
   let signupCredentials = null;
   let matchOffset = 0;
+
+  if (browseView === "communities" || browseView === "events") {
+    document.body.dataset.browse = browseView;
+    const title = browseView === "communities" ? "All communities" : "All events";
+    document.title = `${title} — Community Chord`;
+    document.querySelector(browseView === "communities" ? "#communities-title" : "#events-title").textContent = title;
+    document.querySelector("#home-nav").href = "index.html#home";
+    document.querySelector("#communities-nav").href = "index.html?view=communities#communities";
+    document.querySelector("#events-nav").href = "index.html?view=events#events";
+    document.querySelector(`#${browseView}-nav`).classList.add("is-active");
+    document.querySelector("#home-nav").classList.remove("is-active");
+  }
 
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
