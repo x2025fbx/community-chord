@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#100e19">
+    <meta name="description" content="Find your people, build your sound. Meet musicians and make music with Community Chord.">
+    <title>Community Chord — Find your people. Build your sound.</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="data.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="Community Chord home">
+        <span class="brand-mark" aria-hidden="true">♫</span>
+        <span>community<span class="brand-light">chord</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-link is-active" href="#home">Home</a>
+        <a class="nav-link" href="#discover">Discover Musicians</a>
+        <a class="nav-link" href="#communities">Communities</a>
+        <a class="nav-link" href="#events">Events</a>
+        <a class="nav-link" href="#profile">My Profile</a>
+        <a class="button button-primary header-membership" href="#communities">Membership</a>
+      </nav>
+      <a class="header-profile" href="#profile" aria-label="View your profile">
+        <span class="avatar avatar-you">J</span>
+        <span class="header-name">Jordan</span>
+        <span class="online-dot" aria-label="Online"></span>
+      </a>
+    </header>
+
+    <main id="main">
+      <section class="hero page-section" id="home" aria-labelledby="welcome-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="live-pulse"></span> YOUR LOCAL MUSIC COMMUNITY</p>
+          <h1 id="welcome-title">Find your people.<br><span>Build your sound.</span></h1>
+          <p class="hero-description">The next great song starts with a connection. Meet musicians nearby, find your bandmates, and make something real.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#discover">Find your sound <span aria-hidden="true">↗</span></a>
+            <a class="button button-quiet" href="#communities">Explore communities</a>
+          </div>
+          <div class="community-proof">
+            <div class="avatar-stack" aria-hidden="true">
+              <span class="avatar avatar-coral">M</span><span class="avatar avatar-blue">A</span><span class="avatar avatar-gold">R</span><span class="avatar avatar-lilac">S</span>
+            </div>
+            <p><strong>Good music starts together.</strong><br>Join a community that gets it.</p>
+          </div>
+        </div>
+        <aside class="hero-feature" aria-label="Your weekly listening">
+          <div class="feature-topline"><span class="feature-label">YOUR NEXT CHAPTER</span><span class="sparkle" aria-hidden="true">✦</span></div>
+          <div class="sound-art" aria-hidden="true">
+            <span class="sound-orbit orbit-one"></span><span class="sound-orbit orbit-two"></span>
+            <span class="sound-note">♫</span><span class="sound-star star-one">✦</span><span class="sound-star star-two">✧</span>
+          </div>
+          <p class="feature-kicker">A good match is closer than you think</p>
+          <h2>Make room<br>for a new sound.</h2>
+          <a href="#matches" class="feature-link">Meet your matches <span aria-hidden="true">→</span></a>
+          <span class="feature-index">01 / 04</span>
+        </aside>
+      </section>
+
+      <section class="section-block matches-section" id="matches" aria-labelledby="matches-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">MADE FOR YOUR NEXT JAM</p>
+            <h2 id="matches-title">Your kind of <span>people.</span></h2>
+            <p class="section-subtitle">A few musicians who could be the missing piece.</p>
+          </div>
+          <button class="text-button" id="refresh-matches" type="button">Refresh picks <span aria-hidden="true">↻</span></button>
+        </div>
+        <div class="match-grid" id="match-list" aria-live="polite"></div>
+      </section>
+
+      <section class="section-block discover-section" id="discover" aria-labelledby="discover-title">
+        <div class="section-heading discover-heading">
+          <div>
+            <p class="eyebrow">THE RIGHT PEOPLE, RIGHT HERE</p>
+            <h2 id="discover-title">Discover musicians</h2>
+            <p class="section-subtitle">Find your next bandmate, collaborator, or favorite person to jam with.</p>
+          </div>
+          <span class="result-count" id="musician-count" aria-live="polite"></span>
+        </div>
+        <form class="filter-bar" id="musician-filters">
+          <label class="search-field">
+            <span class="sr-only">Search musicians</span>
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input id="musician-search" type="search" placeholder="Search name, artist, or interest">
+          </label>
+          <label class="select-field"><span class="sr-only">Filter by instrument</span>
+            <select id="instrument-filter"><option value="">All instruments</option></select>
+          </label>
+          <label class="select-field"><span class="sr-only">Filter by genre</span>
+            <select id="genre-filter"><option value="">All genres</option></select>
+          </label>
+          <label class="select-field"><span class="sr-only">Filter by skill level</span>
+            <select id="skill-filter"><option value="">All skill levels</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
+          </label>
+          <button class="filter-reset" id="clear-filters" type="button">Clear</button>
+        </form>
+        <div class="musician-grid" id="musician-list" aria-live="polite"></div>
+        <p class="empty-state" id="musician-empty" hidden>No musicians match those filters yet. Try changing your search.</p>
+      </section>
+
+      <section class="section-block community-section" id="communities" aria-labelledby="communities-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">FIND YOUR SCENE</p>
+            <h2 id="communities-title">Better <span>together.</span></h2>
+            <p class="section-subtitle">Small scenes, big energy. There’s a place for your sound.</p>
+          </div>
+          <a class="text-button" href="#communities">All communities <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="community-grid" id="community-list"></div>
+      </section>
+
+      <section class="section-block lower-grid">
+        <div class="events-panel" id="events" aria-labelledby="events-title">
+          <div class="section-heading compact-heading">
+            <div><p class="eyebrow">OUT IN THE WORLD</p><h2 id="events-title">Coming up <span>near you.</span></h2></div>
+            <a class="text-button" href="#events">All events <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="event-list" id="event-list"></div>
+        </div>
+        <div class="collab-panel" id="collaborate" aria-labelledby="collab-title">
+          <p class="eyebrow">PASS THE AUX</p>
+          <h2 id="collab-title">What are you<br><span>working on?</span></h2>
+          <p class="section-subtitle">Share a little idea. Find someone who wants to make it a lot.</p>
+          <form id="idea-form" class="idea-form">
+            <label class="sr-only" for="idea-input">Share a music idea</label>
+            <input id="idea-input" type="text" maxlength="160" placeholder="A melody, a lyric, a late-night thought..." required>
+            <button type="submit" class="button button-primary">Share idea <span aria-hidden="true">↗</span></button>
+          </form>
+          <div class="idea-list" id="idea-list" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="profile-section" id="profile" aria-labelledby="profile-title">
+        <div class="profile-identity">
+          <div class="avatar avatar-you profile-avatar">J</div>
+          <div><p class="eyebrow">YOUR ARTIST CARD</p><h2 id="profile-title">Jordan Lee</h2><p class="profile-location">Portland, OR <span aria-hidden="true">·</span> Here to make music</p></div>
+        </div>
+        <div class="profile-details">
+          <div><span class="detail-label">I PLAY</span><p>Guitar <span class="detail-muted">·</span> Intermediate</p></div>
+          <div><span class="detail-label">MY SOUND</span><p>Indie rock <span class="detail-muted">·</span> Dream pop <span class="detail-muted">·</span> Alternative</p></div>
+          <div><span class="detail-label">ON REPEAT</span><p>Alvvays <span class="detail-muted">·</span> Big Thief <span class="detail-muted">·</span> Slow Pulp</p></div>
+          <div><span class="detail-label">LOOKING FOR</span><p>Bandmates, songwriting, a reason to leave the house with my guitar.</p></div>
+        </div>
+        <a class="button button-outline" href="#discover">Find my bandmates <span aria-hidden="true">↗</span></a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand footer-brand" href="#home"><span class="brand-mark" aria-hidden="true">♫</span><span>community<span class="brand-light">chord</span></span></a>
+      <p>Made for the love of making music.</p>
+      <span class="footer-note">A community prototype · No account required</span>
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
