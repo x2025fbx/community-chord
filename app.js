@@ -187,6 +187,20 @@
   document.querySelector("#account-dialog").addEventListener("click", (event) => {
     if (event.target === event.currentTarget) event.currentTarget.close();
   });
+  const membershipDialog = document.querySelector("#membership-dialog");
+  document.querySelector("#membership-button").addEventListener("click", () => {
+    document.querySelector("#membership-message").textContent = "";
+    membershipDialog.showModal();
+  });
+  document.querySelector("#membership-close").addEventListener("click", () => {
+    membershipDialog.close();
+  });
+  membershipDialog.addEventListener("click", (event) => {
+    if (event.target === event.currentTarget) event.currentTarget.close();
+  });
+  document.querySelector("#membership-purchase").addEventListener("click", () => {
+    document.querySelector("#membership-message").textContent = "This is a demo. No payment was processed and no membership was activated.";
+  });
 
   document.querySelector("#signup-continue").addEventListener("click", () => {
     const credentialInputs = [...document.querySelector("#signup-credentials").querySelectorAll("input")];

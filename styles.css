@@ -216,6 +216,16 @@ h1, h2, h3 { font-family: var(--font-display); }
 .account-dialog-heading .eyebrow { margin-bottom: 5px; }
 .account-dialog-heading h2 { margin: 0; font-size: 24px; letter-spacing: -.7px; }
 .account-dialog-description { margin: 8px 0 17px; color: var(--muted); font-size: 12px; }
+.membership-price-card { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px; border: 1px solid #554a70; border-radius: 10px; background: linear-gradient(140deg,#252139,#1d1a29); }
+.membership-price-card .eyebrow { margin-bottom: 5px; }
+.membership-price-card h3 { margin: 0; font-size: 15px; }
+.membership-price { margin: 0; white-space: nowrap; color: #d3c4ff; }
+.membership-price strong { font-size: 36px; line-height: 1; letter-spacing: -1px; }
+.membership-price span { color: var(--muted); font-size: 12px; }
+.membership-purchase-area { margin-top: 16px; }
+.membership-purchase-area .button { width: 100%; }
+.membership-message { margin: 12px 0 0; color: #c8bedc; font-size: 11px; }
+.membership-message:empty { display: none; }
 .account-close { width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-raised); color: var(--text); font-size: 23px; line-height: 1; cursor: pointer; }
 .account-form { display: grid; gap: 12px; }
 .account-form[hidden] { display: none; }
