@@ -83,7 +83,12 @@
             <h2 id="discover-title">Discover musicians</h2>
             <p class="section-subtitle">Find your next bandmate, collaborator, or favorite person to jam with.</p>
           </div>
-          <span class="result-count" id="musician-count" aria-live="polite"></span>
+          <div class="discover-actions">
+            <span class="result-count" id="musician-count" aria-live="polite"></span>
+            <button class="text-button" id="refresh-musicians" type="button">
+              Refresh <span aria-hidden="true">↻</span>
+            </button>
+          </div>
         </div>
         <form class="filter-bar" id="musician-filters">
           <label class="search-field">
@@ -103,9 +108,6 @@
           <button class="filter-reset" id="clear-filters" type="button">Clear</button>
         </form>
         <div class="musician-grid" id="musician-list" aria-live="polite"></div>
-        <button class="text-button" id="toggle-musicians" type="button" aria-expanded="false" aria-controls="musician-list" hidden>
-          <span class="toggle-label">All musicians</span> <span class="toggle-icon" aria-hidden="true">→</span>
-        </button>
         <p class="empty-state" id="musician-empty" hidden>No musicians match those filters yet. Try changing your search.</p>
       </section>
 

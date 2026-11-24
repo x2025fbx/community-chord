@@ -9,7 +9,7 @@
   let currentAccount = null;
   let signupCredentials = null;
   let matchOffset = 0;
-  let musiciansExpanded = false;
+  let musicianOffset = 0;
   let communitiesExpanded = false;
   let eventsExpanded = false;
 
@@ -373,16 +373,17 @@
         (!skill || person.skill === skill);
     });
     const hasSearchOrFilters = Boolean(query || instrument || genre || skill);
-    const visible = hasSearchOrFilters || musiciansExpanded ? filtered : filtered.slice(0, 6);
+    const musicianPreviewLimit = 8;
+    const visible = hasSearchOrFilters
+      ? filtered
+      : filtered.length <= musicianPreviewLimit
+        ? filtered
+        : Array.from({ length: musicianPreviewLimit }, (_, index) =>
+            filtered[(musicianOffset + index) % filtered.length]);
     document.querySelector("#musician-list").innerHTML = visible.map(musicianCard).join("");
     document.querySelector("#musician-count").textContent = `${filtered.length} ${filtered.length === 1 ? "musician" : "musicians"}`;
     document.querySelector("#musician-empty").hidden = filtered.length !== 0;
-
-    const toggle = document.querySelector("#toggle-musicians");
-    toggle.hidden = hasSearchOrFilters || filtered.length <= 6;
-    if (!toggle.hidden) {
-      updateExpansionControl(toggle, musiciansExpanded, "All musicians");
-    }
+    document.querySelector("#refresh-musicians").hidden = hasSearchOrFilters || filtered.length <= musicianPreviewLimit;
   }
 
   function fillFilters() {
@@ -443,8 +444,8 @@
     document.querySelector("#skill-filter").value = "";
     renderMusicians();
   });
-  document.querySelector("#toggle-musicians").addEventListener("click", (event) => {
-    musiciansExpanded = !musiciansExpanded;
+  document.querySelector("#refresh-musicians").addEventListener("click", () => {
+    musicianOffset = (musicianOffset + 8) % data.musicians.length;
     renderMusicians();
   });
   document.querySelector("#refresh-matches").addEventListener("click", () => {

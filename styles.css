@@ -119,6 +119,7 @@ h1, h2, h3 { font-family: var(--font-display); }
 .discover-section { padding-top: 62px; }
 .discover-heading { align-items: end; }
 .result-count { color: #9f99ae; font-size: 11px; padding-bottom: 4px; }
+.discover-actions { display: flex; align-items: center; gap: 14px; padding-bottom: 3px; }
 .filter-bar { display: grid; grid-template-columns: 1fr repeat(3, minmax(130px, .42fr)) auto; gap: 9px; margin-bottom: 19px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: #171520; }
 .search-field, .select-field { min-width: 0; display: flex; align-items: center; }
 .search-field { gap: 8px; padding: 0 10px; }
