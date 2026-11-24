@@ -1,7 +1,7 @@
 // Fictional sample content for the Community Chord prototype.
 window.COMMUNITY_CHORD_DATA = {
   growth: {
-    collaborations: 28
+    collaborations: 84
   },
   currentUser: {
     name: "Jordan Lee",
@@ -23,7 +23,19 @@ window.COMMUNITY_CHORD_DATA = {
     { id: "jordan-baptiste", name: "Jordan Baptiste", instrument: "Guitar", genres: ["Hip-hop", "R&B", "Soul"], skill: "Advanced", location: "Downtown Halifax", artists: ["Kaytranada", "Frank Ocean"], lookingFor: ["Vocals", "Producer"], initials: "JB", color: "teal", bio: "Chill beats, soulful chords, and always looking for a strong verse." },
     { id: "tessa-macleod", name: "Tessa MacLeod", instrument: "Violin", genres: ["Folk", "Celtic", "Indie rock"], skill: "Intermediate", location: "Cole Harbour, NS", artists: ["The Paper Kites", "Crooked Still"], lookingFor: ["Guitar", "Vocals"], initials: "TM", color: "lilac", bio: "Fiddle player happy in either a kitchen session or a full-band rehearsal." },
     { id: "omar-hassan", name: "Omar Hassan", instrument: "Percussion", genres: ["World", "Soul", "Funk"], skill: "Advanced", location: "Spryfield, Halifax", artists: ["Burna Boy", "Tinariwen"], lookingFor: ["Drums", "Bass"], initials: "OH", color: "orange", bio: "Rhythm-first multi-percussionist open to high-energy collaborations." },
-    { id: "chloe-singh", name: "Chloe Singh", instrument: "Saxophone", genres: ["Jazz", "Soul", "Funk"], skill: "Intermediate", location: "North End, Halifax", artists: ["Kamasi Washington", "Snarky Puppy"], lookingFor: ["Keys", "Drums"], initials: "CS", color: "coral", bio: "Looking for a tight groove, room to improvise, and Sunday jam sessions." }
+    { id: "chloe-singh", name: "Chloe Singh", instrument: "Saxophone", genres: ["Jazz", "Soul", "Funk"], skill: "Intermediate", location: "North End, Halifax", artists: ["Kamasi Washington", "Snarky Puppy"], lookingFor: ["Keys", "Drums"], initials: "CS", color: "coral", bio: "Looking for a tight groove, room to improvise, and Sunday jam sessions." },
+    { id: "priya-nair", name: "Priya Nair", instrument: "Producer", genres: ["Electronic", "R&B", "Ambient"], skill: "Advanced", location: "Downtown Halifax", artists: ["Kelela", "James Blake"], lookingFor: ["Vocals", "Songwriter"], initials: "PN", color: "lilac", bio: "Building warm, spacious tracks and looking for voices to bring them to life." },
+    { id: "lucas-murphy", name: "Lucas Murphy", instrument: "Guitar", genres: ["Folk", "Americana", "Indie rock"], skill: "Intermediate", location: "Dartmouth, NS", artists: ["Hozier", "The War on Drugs"], lookingFor: ["Vocals", "Bass"], initials: "LM", color: "mint", bio: "Fingerstyle guitar player up for acoustic sets, co-writing, and the occasional loud chorus." },
+    { id: "imani-clarke", name: "Imani Clarke", instrument: "Vocals", genres: ["R&B", "Soul", "Jazz"], skill: "Advanced", location: "North End, Halifax", artists: ["Cleo Sol", "Sade"], lookingFor: ["Keys", "Producer"], initials: "IC", color: "pink", bio: "Singer with a soft spot for rich harmonies and relaxed late-night sessions." },
+    { id: "ben-foster", name: "Ben Foster", instrument: "Drums", genres: ["Funk", "Indie rock", "Soul"], skill: "Intermediate", location: "Bedford, NS", artists: ["Anderson .Paak", "Khruangbin"], lookingFor: ["Bass", "Vocals"], initials: "BF", color: "blue", bio: "Steady pocket, easygoing rehearsals, and always happy to learn a new groove." },
+    { id: "zoe-campbell", name: "Zoe Campbell", instrument: "Violin", genres: ["Celtic", "Folk", "Classical"], skill: "Advanced", location: "South End, Halifax", artists: ["The Gloaming", "Lankum"], lookingFor: ["Guitar", "Percussion"], initials: "ZC", color: "gold", bio: "Classically trained fiddler looking to mix traditional tunes with new arrangements." },
+    { id: "marcus-reed", name: "Marcus Reed", instrument: "Bass", genres: ["Hip-hop", "Funk", "R&B"], skill: "Advanced", location: "Clayton Park, Halifax", artists: ["Thundercat", "D'Angelo"], lookingFor: ["Drums", "Producer"], initials: "MR", color: "teal", bio: "Bass player chasing deep pocket, inventive arrangements, and a dependable band." },
+    { id: "ella-thompson", name: "Ella Thompson", instrument: "Songwriter", genres: ["Indie pop", "Folk", "Dream pop"], skill: "Intermediate", location: "Downtown Dartmouth", artists: ["Clairo", "Phoebe Bridgers"], lookingFor: ["Vocals", "Guitar"], initials: "ET", color: "coral", bio: "Collecting voice memos and half-finished choruses; looking for a co-writer." },
+    { id: "noah-kim", name: "Noah Kim", instrument: "Keys", genres: ["Jazz", "Electronic", "Soul"], skill: "Advanced", location: "Downtown Halifax", artists: ["Floating Points", "BADBADNOTGOOD"], lookingFor: ["Saxophone", "Drums"], initials: "NK", color: "orange", bio: "Piano, synths, and odd little textures for jazz-adjacent projects." },
+    { id: "fatima-yusuf", name: "Fatima Yusuf", instrument: "Percussion", genres: ["World", "Afrobeat", "Jazz"], skill: "Intermediate", location: "Fairview, Halifax", artists: ["Yussef Dayes", "Seun Kuti"], lookingFor: ["Bass", "Keys"], initials: "FY", color: "pink", bio: "Percussionist interested in building lively, collaborative rhythm sections." },
+    { id: "owen-price", name: "Owen Price", instrument: "Guitar", genres: ["Punk", "Alternative", "Shoegaze"], skill: "Beginner", location: "Spryfield, Halifax", artists: ["Turnstile", "Slowdive"], lookingFor: ["Drums", "Bass"], initials: "OP", color: "blue", bio: "Newer guitarist with a big pedalboard and a soft spot for noisy indie bands." },
+    { id: "sophie-leblanc", name: "Sophie LeBlanc", instrument: "Vocals", genres: ["Folk", "Celtic", "Americana"], skill: "Intermediate", location: "Cole Harbour, NS", artists: ["The Weather Station", "Martha Wainwright"], lookingFor: ["Fiddle", "Guitar"], initials: "SL", color: "gold", bio: "Singer-songwriter hoping to find a few people for warm, stripped-back arrangements." },
+    { id: "gabriel-ross", name: "Gabriel Ross", instrument: "Trumpet", genres: ["Jazz", "Soul", "Funk"], skill: "Intermediate", location: "Downtown Halifax", artists: ["Roy Hargrove", "Robert Glasper"], lookingFor: ["Keys", "Bass"], initials: "GR", color: "orange", bio: "Trumpet player looking for a small group to explore jazz standards and new grooves." }
   ],
   communities: [
     { id: "hfx-indie", name: "Halifax Indie Collective", category: "INDIE ROCK · HALIFAX", members: 284, description: "For bedroom demos, basement shows, and the people who make them happen.", color: "community-purple", mark: "✳" },
@@ -34,7 +46,12 @@ window.COMMUNITY_CHORD_DATA = {
     { id: "beatmakers", name: "HRM Beatmakers", category: "BEATS · HIP-HOP · PRODUCER", members: 246, description: "Share work-in-progress beats and connect with vocalists and visual artists.", color: "community-orange", mark: "◉" },
     { id: "acoustic-coastal", name: "Coastal Acoustic Circle", category: "ACOUSTIC · FOLK · HALIFAX", members: 141, description: "Unplugged meetups for acoustic songwriters and laid-back performers.", color: "community-blue", mark: "≈" },
     { id: "punk-basement", name: "Halifax Basement Noise", category: "PUNK · SHOEGAZE · HRM", members: 192, description: "Find bands, swap rehearsal spaces, and hear about DIY basement shows.", color: "community-purple", mark: "⚡" },
-    { id: "classical-collabs", name: "Classical Crossovers", category: "CLASSICAL · AMBIENT · DARTMOUTH", members: 116, description: "Classically trained musicians exploring modern, ambient, and cross-genre projects.", color: "community-orange", mark: "♩" }
+    { id: "classical-collabs", name: "Classical Crossovers", category: "CLASSICAL · AMBIENT · DARTMOUTH", members: 116, description: "Classically trained musicians exploring modern, ambient, and cross-genre projects.", color: "community-orange", mark: "♩" },
+    { id: "halifax-soul-club", name: "Halifax Soul Club", category: "SOUL · R&B · HALIFAX", members: 203, description: "Vocalists, players, and listeners sharing deep cuts and finding a groove.", color: "community-blue", mark: "♡" },
+    { id: "bedford-acoustic", name: "Bedford Acoustic Sessions", category: "ACOUSTIC · SONGWRITING · BEDFORD", members: 97, description: "Low-key acoustic meetups for works in progress and new collaborations.", color: "community-orange", mark: "♫" },
+    { id: "hrm-electronic", name: "HRM Electronic Producers", category: "ELECTRONIC · PRODUCERS · ONLINE", members: 318, description: "Trade feedback, find vocal collaborators, and share new sounds in progress.", color: "community-purple", mark: "◉" },
+    { id: "halifax-jazz-lab", name: "The Halifax Jazz Lab", category: "JAZZ · IMPROV · DARTMOUTH", members: 164, description: "A welcoming spot for improvisers, small ensembles, and curious beginners.", color: "community-blue", mark: "♬" },
+    { id: "indie-songwriters", name: "Atlantic Indie Songwriters", category: "INDIE · SONGWRITING · ATLANTIC CANADA", members: 231, description: "Share demos, swap honest feedback, and find your next co-writer.", color: "community-purple", mark: "✎" }
   ],
   events: [
     { id: "porch-sessions", day: "29", month: "NOV", name: "Porchlight Sessions", venue: "The Lantern · Halifax", detail: "Local artists · Doors at 7:30", tag: "LIVE MUSIC" },
@@ -42,10 +59,21 @@ window.COMMUNITY_CHORD_DATA = {
     { id: "open-stage", day: "06", month: "DEC", name: "Open Stage: New Voices", venue: "Harbour House · Dartmouth", detail: "A welcoming stage for works in progress.", tag: "OPEN MIC" },
     { id: "bass-jam", day: "09", month: "DEC", name: "Funk & Soul Jam", venue: "Dartmouth Community Arts · Dartmouth", detail: "All instruments welcome · Starts at 8:00", tag: "JAM SESSION" },
     { id: "celtic-session", day: "13", month: "DEC", name: "Community Fiddle Session", venue: "The Bus Stop Theatre · Halifax", detail: "Bring an instrument or come listen.", tag: "FOLK" },
-    { id: "beat-night", day: "17", month: "DEC", name: "Beat Exchange Night", venue: "Good Robot Brewing · Halifax", detail: "Headphones encouraged · Beat battles at 9:00", tag: "PRODUCER" }
+    { id: "beat-night", day: "17", month: "DEC", name: "Beat Exchange Night", venue: "Good Robot Brewing · Halifax", detail: "Headphones encouraged · Beat battles at 9:00", tag: "PRODUCER" },
+    { id: "winter-song-circle", day: "20", month: "DEC", name: "Winter Song Circle", venue: "The Local · Halifax", detail: "Bring an original or a favorite · Starts at 6:30", tag: "SONGWRITING" },
+    { id: "new-year-jam", day: "27", month: "DEC", name: "Year-End Open Jam", venue: "Dartmouth Community Arts · Dartmouth", detail: "All styles welcome · Doors at 7:00", tag: "JAM SESSION" },
+    { id: "first-friday", day: "03", month: "JAN", name: "First Friday: Local Sounds", venue: "The Lantern · Halifax", detail: "Three local acts · Music starts at 8:00", tag: "LIVE MUSIC" },
+    { id: "demo-listening", day: "10", month: "JAN", name: "Demo Listening Room", venue: "North End Bookshop · Halifax", detail: "Share a rough mix and get friendly feedback.", tag: "COMMUNITY" }
   ],
   ideas: [
-    { author: "Maya Chen", initials: "MC", color: "coral", text: "I have a chorus stuck in my head that needs a fuzzy guitar line. Anyone want to trade voice notes?" },
-    { author: "Eli Rivera", initials: "ER", color: "blue", text: "Looking for someone to help turn a 90-second drum loop into a whole song. Lo-fi welcome." }
+    { author: "Maya Chen", initials: "MC", color: "coral", time: "12 min ago", text: "I have a chorus stuck in my head that needs a fuzzy guitar line. Anyone want to trade voice notes?" },
+    { author: "Eli Rivera", initials: "ER", color: "blue", time: "18 min ago", text: "Looking for someone to help turn a 90-second drum loop into a whole song. Lo-fi welcome." },
+    { author: "Nina Brooks", initials: "NB", color: "gold", time: "42 min ago", text: "Wrote a bass line that needs a soft, hazy guitar part. Anyone want to trade voice memos?" },
+    { author: "Priya Nair", initials: "PN", color: "lilac", time: "1 hr ago", text: "I have a half-finished ambient beat looking for a vocalist who likes space and slow builds." },
+    { author: "Tessa MacLeod", initials: "TM", color: "lilac", time: "2 hr ago", text: "Anyone up for trying a fiddle tune over a lo-fi drum pattern? Could be fun." },
+    { author: "Jordan Baptiste", initials: "JB", color: "teal", time: "3 hr ago", text: "Looking for a singer to add a hook to a mellow, soul-inspired demo." },
+    { author: "Ella Thompson", initials: "ET", color: "coral", time: "5 hr ago", text: "I have a chorus but no second verse. Happy to co-write over coffee this week." },
+    { author: "Noah Kim", initials: "NK", color: "orange", time: "Yesterday", text: "Putting together a small keys-and-sax session. Any improvisers around Dartmouth?" },
+    { author: "Sophie LeBlanc", initials: "SL", color: "gold", time: "Yesterday", text: "Would love to find a guitarist for a few stripped-back folk songs at an open mic." }
   ]
 };

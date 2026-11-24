@@ -13,8 +13,8 @@ Explore the prototype at **[x2025fbx.github.io/community-chord](https://x2025fbx
 - Create or edit a demo musician profile without an account, email address, or password.
 - Join music communities, RSVP to events, and share collaboration ideas.
 - See connected bandmates, signed-up events, and joined communities in your demo profile.
-- See clearly labeled illustrative community-growth statistics.
-- Expand the communities and events previews to see all available listings, then collapse them with “View less.”
+- See clearly labeled illustrative community-growth statistics and sample community activity.
+- Expand the musician, communities, and events previews to see all available listings, then collapse them with “View less.”
 - View the membership notice; no real payments are processed.
 - Use a responsive interface designed for desktop and mobile screens.
 
@@ -29,4 +29,4 @@ Open `index.html` in a modern browser. No build step, server, database, framewor
 - `data.js` contains fictional sample profiles, communities, events, and starter ideas.
 - `app.js` implements search, filters, matches, connections, community joins, event RSVPs, and idea sharing.
 
-This is a front-end student prototype. Demo profiles, connections, community joins, event RSVPs, and shared ideas exist only in the current page and are cleared when it is refreshed. The musician, community, event, collaboration, and growth figures are fictional sample content, not live platform statistics. There is no backend, real account or login functionality, password collection, or payment processing.
+This is a front-end student prototype. Demo profiles, connections, community joins, event RSVPs, and shared ideas exist only in the current page and are cleared when it is refreshed. The musician profiles, community activity, events, collaborations, and growth figures are fictional sample content, not live platform statistics. There is no backend, real account or login functionality, password collection, or payment processing.

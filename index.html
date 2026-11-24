@@ -36,7 +36,7 @@
     <main id="main">
       <section class="hero page-section" id="home" aria-labelledby="welcome-title">
         <div class="hero-copy">
-          <p class="eyebrow"><span class="live-pulse"></span> YOUR LOCAL MUSIC COMMUNITY</p>
+          <p class="eyebrow"><span class="live-pulse"></span> YOUR LOCAL MUSIC COMMUNITY · DEMO PREVIEW</p>
           <h1 id="welcome-title">Find your people.<br><span>Build your sound.</span></h1>
           <p class="hero-description">Community Chord is a music community for musicians, singers, songwriters, and music lovers. Find people to play with, collaborate on songs, and discover new artists and events.</p>
           <div class="hero-actions">
@@ -68,7 +68,7 @@
           <div>
             <p class="eyebrow">MADE FOR YOUR NEXT JAM</p>
             <h2 id="matches-title">Your kind of <span>people.</span></h2>
-            <p class="section-subtitle">A few musicians who could be the missing piece.</p>
+            <p class="section-subtitle">Suggested musicians to start your next jam.</p>
           </div>
           <button class="text-button" id="refresh-matches" type="button">Refresh picks <span aria-hidden="true">↻</span></button>
         </div>
@@ -84,8 +84,8 @@
           </div>
           <div class="discover-actions">
             <span class="result-count" id="musician-count" aria-live="polite"></span>
-            <button class="text-button" id="refresh-musicians" type="button">
-              Refresh <span aria-hidden="true">↻</span>
+            <button class="text-button" id="refresh-musicians" type="button" aria-expanded="false" aria-controls="musician-list">
+              <span class="toggle-label">All musicians</span> <span class="toggle-icon" aria-hidden="true">→</span>
             </button>
           </div>
         </div>
@@ -115,7 +115,7 @@
           <p class="eyebrow">MORE PEOPLE, MORE POSSIBILITIES</p>
           <h2 id="growth-title">A growing scene makes <span>better music.</span></h2>
           <p class="section-subtitle">Each new musician brings more potential bandmates, collaborators, and shared ideas. More artists and events give the whole community more to discover.</p>
-          <p class="growth-disclaimer">Illustrative demonstration data only — these are not real platform statistics.</p>
+          <p class="growth-disclaimer">Profiles, posts, events, and displayed counts are fictional sample data for this student prototype.</p>
         </div>
         <div class="growth-stats" aria-label="Demonstration community statistics">
           <div class="growth-stat"><strong id="growth-musicians">0</strong><span>musicians</span></div>

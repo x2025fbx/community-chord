@@ -3,10 +3,11 @@
   const connected = new Set();
   const joined = new Set();
   const rsvps = new Set();
-  const listPreviewLimit = 2;
+  const listPreviewLimit = 4;
+  const musicianPreviewLimit = 12;
   let demoProfile = null;
   let matchOffset = 0;
-  let musicianOffset = 0;
+  let musiciansExpanded = false;
   let communitiesExpanded = false;
   let eventsExpanded = false;
 
@@ -182,7 +183,7 @@
     const ranked = data.musicians
       .filter((person) => person.id !== demoProfile?.id)
       .sort((a, b) => matchScore(b) - matchScore(a) || a.name.localeCompare(b.name));
-    const picks = Array.from({ length: 3 }, (_, index) => ranked[(index + matchOffset) % ranked.length]);
+    const picks = Array.from({ length: 6 }, (_, index) => ranked[(index + matchOffset) % ranked.length]);
     document.querySelector("#match-list").innerHTML = picks.map((person, index) => `
       <article class="match-card">
         <div class="match-card-top"><span class="match-number">0${index + 1}</span><span class="match-score">✦ ${Math.min(99, 78 + matchScore(person) * 5)}% your sound</span></div>
@@ -291,17 +292,14 @@
         (!skill || person.skill === skill);
     });
     const hasSearchOrFilters = Boolean(query || instrument || genre || skill);
-    const musicianPreviewLimit = 8;
-    const visible = hasSearchOrFilters
+    const visible = hasSearchOrFilters || musiciansExpanded
       ? filtered
-      : filtered.length <= musicianPreviewLimit
-        ? filtered
-        : Array.from({ length: musicianPreviewLimit }, (_, index) =>
-            filtered[(musicianOffset + index) % filtered.length]);
+      : filtered.slice(0, musicianPreviewLimit);
     document.querySelector("#musician-list").innerHTML = visible.map(musicianCard).join("");
     document.querySelector("#musician-count").textContent = `${filtered.length} ${filtered.length === 1 ? "musician" : "musicians"}`;
     document.querySelector("#musician-empty").hidden = filtered.length !== 0;
     document.querySelector("#refresh-musicians").hidden = hasSearchOrFilters || filtered.length <= musicianPreviewLimit;
+    updateExpansionControl(document.querySelector("#refresh-musicians"), musiciansExpanded, "All musicians");
   }
 
   function fillFilters() {
@@ -348,7 +346,7 @@
 
   function renderIdeas() {
     document.querySelector("#idea-list").innerHTML = data.ideas.map((idea) => `
-      <article class="idea-item">${initialsAvatar(idea.initials, idea.color, "idea-avatar")}<div><span class="idea-author">${escapeHtml(idea.author)} <span>· just now</span></span><p>${escapeHtml(idea.text)}</p></div></article>`).join("");
+      <article class="idea-item">${initialsAvatar(idea.initials, idea.color, "idea-avatar")}<div><span class="idea-author">${escapeHtml(idea.author)} <span>· ${escapeHtml(idea.time || "just now")}</span></span><p>${escapeHtml(idea.text)}</p></div></article>`).join("");
   }
 
   function updateExpansionControl(button, expanded, collapsedLabel) {
@@ -376,7 +374,7 @@
     renderMusicians();
   });
   document.querySelector("#refresh-musicians").addEventListener("click", () => {
-    musicianOffset = (musicianOffset + 8) % data.musicians.length;
+    musiciansExpanded = !musiciansExpanded;
     renderMusicians();
   });
   document.querySelector("#refresh-matches").addEventListener("click", () => {
@@ -454,7 +452,7 @@
     const input = document.querySelector("#idea-input");
     const text = input.value.trim();
     if (!text) return;
-    data.ideas.unshift({ author: demoProfile?.name || "Guest musician", initials: demoProfile?.initials || "G", color: "lilac", text });
+    data.ideas.unshift({ author: demoProfile?.name || "Guest musician", initials: demoProfile?.initials || "G", color: "lilac", time: "just now", text });
     renderIdeas();
     input.value = "";
     showToast("Your idea is out there. Let the collaboration begin!");
