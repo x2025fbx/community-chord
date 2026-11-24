@@ -3,24 +3,14 @@
   const connected = new Set();
   const joined = new Set();
   const rsvps = new Set();
+  const listPreviewLimit = 2;
   const accountStorageKey = "communityChordAccounts";
   const accountSessionStorageKey = "communityChordActiveAccount";
-  const browseView = new URLSearchParams(window.location.search).get("view");
   let currentAccount = null;
   let signupCredentials = null;
   let matchOffset = 0;
-
-  if (browseView === "communities" || browseView === "events") {
-    document.body.dataset.browse = browseView;
-    const title = browseView === "communities" ? "All communities" : "All events";
-    document.title = `${title} — Community Chord`;
-    document.querySelector(browseView === "communities" ? "#communities-title" : "#events-title").textContent = title;
-    document.querySelector("#home-nav").href = "index.html#home";
-    document.querySelector("#communities-nav").href = "index.html?view=communities#communities";
-    document.querySelector("#events-nav").href = "index.html?view=events#events";
-    document.querySelector(`#${browseView}-nav`).classList.add("is-active");
-    document.querySelector("#home-nav").classList.remove("is-active");
-  }
+  let communitiesExpanded = false;
+  let eventsExpanded = false;
 
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -380,7 +370,8 @@
   }
 
   function renderCommunities() {
-    document.querySelector("#community-list").innerHTML = data.communities.map((community) => `
+    const communities = communitiesExpanded ? data.communities : data.communities.slice(0, listPreviewLimit);
+    document.querySelector("#community-list").innerHTML = communities.map((community) => `
       <article class="community-card ${escapeHtml(community.color)}">
         <div class="community-card-top"><span class="community-mark" aria-hidden="true">${escapeHtml(community.mark)}</span><span class="community-category">${escapeHtml(community.category)}</span></div>
         <h3>${escapeHtml(community.name)}</h3><p>${escapeHtml(community.description)}</p>
@@ -391,7 +382,8 @@
   }
 
   function renderEvents() {
-    document.querySelector("#event-list").innerHTML = data.events.map((event) => `
+    const events = eventsExpanded ? data.events : data.events.slice(0, listPreviewLimit);
+    document.querySelector("#event-list").innerHTML = events.map((event) => `
       <article class="event-item">
         <div class="event-date"><span>${escapeHtml(event.month)}</span><strong>${escapeHtml(event.day)}</strong></div>
         <div class="event-copy"><span class="event-tag">${escapeHtml(event.tag)}</span><h3>${escapeHtml(event.name)}</h3><p>${escapeHtml(event.venue)} <span>·</span> ${escapeHtml(event.detail)}</p></div>
@@ -402,6 +394,12 @@
   function renderIdeas() {
     document.querySelector("#idea-list").innerHTML = data.ideas.map((idea) => `
       <article class="idea-item">${initialsAvatar(idea.initials, idea.color, "idea-avatar")}<div><span class="idea-author">${escapeHtml(idea.author)} <span>· just now</span></span><p>${escapeHtml(idea.text)}</p></div></article>`).join("");
+  }
+
+  function updateExpansionControl(button, expanded, collapsedLabel) {
+    button.setAttribute("aria-expanded", String(expanded));
+    button.querySelector(".toggle-label").textContent = expanded ? "View less" : collapsedLabel;
+    button.querySelector(".toggle-icon").textContent = expanded ? "↑" : "→";
   }
 
   document.querySelectorAll(".nav-link").forEach((link) => {
@@ -425,6 +423,18 @@
   document.querySelector("#refresh-matches").addEventListener("click", () => {
     matchOffset = (matchOffset + 3) % data.musicians.length;
     renderMatches();
+  });
+  document.querySelector("#toggle-communities").hidden = data.communities.length <= listPreviewLimit;
+  document.querySelector("#toggle-communities").addEventListener("click", (event) => {
+    communitiesExpanded = !communitiesExpanded;
+    renderCommunities();
+    updateExpansionControl(event.currentTarget, communitiesExpanded, "All communities");
+  });
+  document.querySelector("#toggle-events").hidden = data.events.length <= listPreviewLimit;
+  document.querySelector("#toggle-events").addEventListener("click", (event) => {
+    eventsExpanded = !eventsExpanded;
+    renderEvents();
+    updateExpansionControl(event.currentTarget, eventsExpanded, "All events");
   });
 
   document.addEventListener("click", (event) => {

@@ -11,7 +11,7 @@ Explore the prototype at **[x2025fbx.github.io/community-chord](https://x2025fbx
 - Discover musicians with search and instrument, genre, and skill filters.
 - Browse suggested musician matches and connect with people.
 - Join music communities, RSVP to events, and share collaboration ideas.
-- Open the full communities or events listings from their homepage sections.
+- Expand the communities and events previews to see all available listings, then collapse them with “View less.”
 - Sign up with an email and password, then add your instruments, favorite music, and artists.
 - Log in with your email and password.
 - Log out to return to the guest profile and show the sign-up and login buttons again.

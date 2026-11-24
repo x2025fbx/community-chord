@@ -13,7 +13,7 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
-      <a class="brand" href="index.html#home" aria-label="Community Chord home">
+      <a class="brand" href="#home" aria-label="Community Chord home">
         <span class="brand-mark" aria-hidden="true">♫</span>
         <span>community<span class="brand-light">chord</span></span>
       </a>
@@ -113,7 +113,9 @@
             <h2 id="communities-title">Better <span>together.</span></h2>
             <p class="section-subtitle">Small scenes, big energy. There’s a place for your sound.</p>
           </div>
-          <a class="text-button" href="index.html?view=communities#communities">All communities <span aria-hidden="true">→</span></a>
+          <button class="text-button" id="toggle-communities" type="button" aria-expanded="false" aria-controls="community-list">
+            <span class="toggle-label">All communities</span> <span class="toggle-icon" aria-hidden="true">→</span>
+          </button>
         </div>
         <div class="community-grid" id="community-list"></div>
       </section>
@@ -122,7 +124,9 @@
         <div class="events-panel" id="events" aria-labelledby="events-title">
           <div class="section-heading compact-heading">
             <div><p class="eyebrow">OUT IN THE WORLD</p><h2 id="events-title">Coming up <span>near you.</span></h2></div>
-            <a class="text-button" href="index.html?view=events#events">All events <span aria-hidden="true">→</span></a>
+            <button class="text-button" id="toggle-events" type="button" aria-expanded="false" aria-controls="event-list">
+              <span class="toggle-label">All events</span> <span class="toggle-icon" aria-hidden="true">→</span>
+            </button>
           </div>
           <div class="event-list" id="event-list"></div>
         </div>
@@ -155,7 +159,7 @@
     </main>
 
     <footer class="site-footer">
-      <a class="brand footer-brand" href="index.html#home"><span class="brand-mark" aria-hidden="true">♫</span><span>community<span class="brand-light">chord</span></span></a>
+      <a class="brand footer-brand" href="#home"><span class="brand-mark" aria-hidden="true">♫</span><span>community<span class="brand-light">chord</span></span></a>
       <p>Made for the love of making music.</p>
       <span class="footer-note">A community prototype · Sign up to create a profile</span>
     </footer>
