@@ -108,7 +108,6 @@
     document.querySelector(".header-profile .avatar").textContent = initials;
     document.querySelector(".header-name").textContent = demoProfile?.name || "Guest";
     document.querySelector(".header-profile").setAttribute("aria-label", `View ${demoProfile ? `${name}'s demo` : "guest"} profile`);
-    document.querySelector("#header-demo-button").textContent = demoProfile ? "Edit demo profile" : "Create demo profile";
     document.querySelector("#profile-avatar").textContent = initials;
     document.querySelector("#profile-title").textContent = name;
     document.querySelector("#profile-location").textContent = demoProfile
