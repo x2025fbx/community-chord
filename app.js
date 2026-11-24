@@ -98,17 +98,10 @@
   function showAccountDialog(mode) {
     const dialog = document.querySelector("#account-dialog");
     const isSignup = mode === "signup";
-    document.querySelector("#account-dialog-title").textContent = isSignup ? "Create your account" : "Log in";
+    document.querySelector("#account-dialog-title").textContent = isSignup ? "Sign up unavailable" : "Log in unavailable";
     document.querySelector("#account-dialog-description").textContent = isSignup
-      ? "Start with your email and password."
-      : "Enter your email and password.";
-    document.querySelector("#signup-form").hidden = !isSignup;
-    document.querySelector("#login-form").hidden = isSignup;
-    document.querySelector("#signup-form").reset();
-    document.querySelector("#login-form").reset();
-    signupCredentials = null;
-    setSignupStep("credentials");
-    setAccountMessage("");
+      ? "This is a student prototype. You cannot actually sign up or create an account."
+      : "This is a student prototype. You cannot actually log in.";
     dialog.showModal();
   }
 
@@ -224,24 +217,14 @@
       showAccountDialog(button.dataset.accountAction);
     });
   });
-  document.querySelector("#logout-button").addEventListener("click", () => {
-    const sessionCleared = clearAccountSession();
-    currentAccount = null;
-    connected.clear();
-    renderAccount();
-    showToast(sessionCleared
-      ? "You have been logged out."
-      : "You have been logged out, but this browser could not clear the saved session.");
-  });
-  document.querySelector("[data-dialog-close]").addEventListener("click", () => {
-    document.querySelector("#account-dialog").close();
+  document.querySelectorAll("[data-dialog-close]").forEach((button) => {
+    button.addEventListener("click", () => document.querySelector("#account-dialog").close());
   });
   document.querySelector("#account-dialog").addEventListener("click", (event) => {
     if (event.target === event.currentTarget) event.currentTarget.close();
   });
   const membershipDialog = document.querySelector("#membership-dialog");
   document.querySelector("#membership-button").addEventListener("click", () => {
-    document.querySelector("#membership-message").textContent = "";
     membershipDialog.showModal();
   });
   document.querySelector("#membership-close").addEventListener("click", () => {
@@ -251,128 +234,7 @@
     if (event.target === event.currentTarget) event.currentTarget.close();
   });
   document.querySelector("#membership-purchase").addEventListener("click", () => {
-    document.querySelector("#membership-message").textContent = "This is a demo. No payment was processed and no membership was activated.";
-  });
-
-  document.querySelector("#signup-continue").addEventListener("click", () => {
-    const credentialInputs = [...document.querySelector("#signup-credentials").querySelectorAll("input")];
-    if (!credentialInputs.every((input) => input.reportValidity())) return;
-    const [emailInput, passwordInput, confirmationInput] = credentialInputs;
-    if (passwordInput.value !== confirmationInput.value) {
-      setAccountMessage("The passwords do not match.");
-      confirmationInput.focus();
-      return;
-    }
-    signupCredentials = {
-      email: emailInput.value.trim().toLowerCase(),
-      password: passwordInput.value
-    };
-    setAccountMessage("");
-    setSignupStep("profile");
-    document.querySelector("#signup-profile input").focus();
-  });
-  document.querySelector("#signup-back").addEventListener("click", () => {
-    setAccountMessage("");
-    setSignupStep("credentials");
-    document.querySelector("#signup-credentials input").focus();
-  });
-
-  document.querySelector("#signup-form").addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (!signupCredentials) {
-      setAccountMessage("Enter your email and password to continue.");
-      setSignupStep("credentials");
-      return;
-    }
-    const formData = new FormData(form);
-    const account = {
-      name: formData.get("name").trim(),
-      music: formData.get("music").trim(),
-      instruments: formData.get("instruments").trim(),
-      artists: formData.get("artists").trim(),
-      roles: formData.getAll("roles"),
-      connections: []
-    };
-    if ([account.name, account.music, account.instruments, account.artists].some((value) => !value)) {
-      setAccountMessage("Please fill in each profile field.");
-      return;
-    }
-    const accounts = readAccounts();
-    if (!accounts) return;
-    if (accounts.some((savedAccount) => savedAccount.email?.toLowerCase() === signupCredentials.email)) {
-      setAccountMessage("That email already has an account. Log in instead.");
-      return;
-    }
-    if (account.roles.length === 0) {
-      setAccountMessage("Choose at least one role that describes you.");
-      return;
-    }
-    try {
-      const passwordData = await hashPassword(signupCredentials.password);
-      account.email = signupCredentials.email;
-      account.passwordSalt = passwordData.salt;
-      account.passwordHash = passwordData.hash;
-    } catch (error) {
-      console.error("Could not hash the Community Chord password.", error);
-      setAccountMessage("Password setup is unavailable in this browser. Try a modern browser over HTTPS.");
-      return;
-    }
-    try {
-      window.localStorage.setItem(accountStorageKey, JSON.stringify([...accounts, account]));
-    } catch (error) {
-      console.error("Could not save the Community Chord account.", error);
-      setAccountMessage("Your account could not be saved in this browser. Check browser storage and try again.");
-      return;
-    }
-    currentAccount = account;
-    connected.clear();
-    const sessionSaved = saveAccountSession(account.email);
-    renderAccount();
-    form.reset();
-    document.querySelector("#account-dialog").close();
-    showToast(sessionSaved
-      ? `Welcome to Community Chord, ${account.name}!`
-      : "You are signed in, but this browser could not save your session.");
-  });
-
-  document.querySelector("#login-form").addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    const email = formData.get("email").trim().toLowerCase();
-    const password = formData.get("password");
-    const accounts = readAccounts();
-    if (!accounts) return;
-    const account = accounts.find((savedAccount) => savedAccount.email?.toLowerCase() === email);
-    if (!account?.passwordSalt || !account.passwordHash) {
-      setAccountMessage("Incorrect email or password.");
-      return;
-    }
-    let isValidPassword;
-    try {
-      isValidPassword = await verifyPassword(password, account.passwordSalt, account.passwordHash);
-    } catch (error) {
-      console.error("Could not verify the Community Chord password.", error);
-      setAccountMessage("Password login is unavailable in this browser. Try a modern browser over HTTPS.");
-      return;
-    }
-    if (!isValidPassword) {
-      setAccountMessage("Incorrect email or password.");
-      return;
-    }
-    currentAccount = account;
-    connected.clear();
-    (account.connections || []).forEach((id) => {
-      if (data.musicians.some((person) => person.id === id)) connected.add(id);
-    });
-    const sessionSaved = saveAccountSession(account.email);
-    renderAccount();
-    form.reset();
-    document.querySelector("#account-dialog").close();
-    showToast(sessionSaved
-      ? `Welcome back, ${account.name}!`
-      : "You are signed in, but this browser could not save your session.");
+    membershipDialog.close();
   });
 
   function initialsAvatar(initials, color, extraClass = "") {
@@ -587,6 +449,5 @@
   renderCommunities();
   renderEvents();
   renderIdeas();
-  restoreAccountSession();
   renderAccount();
 })();

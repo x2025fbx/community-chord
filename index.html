@@ -173,7 +173,7 @@
     <footer class="site-footer">
       <a class="brand footer-brand" href="#home"><span class="brand-mark" aria-hidden="true">♫</span><span>community<span class="brand-light">chord</span></span></a>
       <p>Made for the love of making music.</p>
-      <span class="footer-note">A community prototype · Sign up to create a profile</span>
+      <span class="footer-note">Student prototype · Sign up to create a profile</span>
     </footer>
     <dialog class="account-dialog" id="account-dialog" aria-labelledby="account-dialog-title">
       <div class="account-dialog-heading">
@@ -183,80 +183,21 @@
         </div>
         <button class="account-close" type="button" aria-label="Close dialog" data-dialog-close>×</button>
       </div>
-      <p class="account-dialog-description" id="account-dialog-description">Start with your email and password.</p>
-      <p class="account-message" id="account-message" role="status" aria-live="polite"></p>
-      <form class="account-form" id="signup-form">
-        <div class="signup-step" id="signup-credentials">
-          <label>Email
-            <input name="email" type="email" autocomplete="email" maxlength="254" required>
-          </label>
-          <label>Password
-            <input name="password" type="password" autocomplete="new-password" minlength="8" required>
-          </label>
-          <label>Re-enter password
-            <input name="password-confirmation" type="password" autocomplete="new-password" minlength="8" required>
-          </label>
-          <button class="button button-primary account-submit" id="signup-continue" type="button">Continue</button>
-        </div>
-        <div class="signup-step" id="signup-profile" hidden>
-          <label>Your name
-            <input name="name" type="text" autocomplete="name" maxlength="60" required>
-          </label>
-          <label>Favorite instruments <span>(separated by commas)</span>
-            <input name="instruments" type="text" maxlength="120" placeholder="Guitar, drums" required>
-          </label>
-          <label>Favorite music <span>(genres or styles, separated by commas)</span>
-            <input name="music" type="text" maxlength="120" placeholder="Indie rock, dream pop" required>
-          </label>
-          <label>Favorite artists <span>(separated by commas)</span>
-            <input name="artists" type="text" maxlength="160" placeholder="Your favorite artists" required>
-          </label>
-          <fieldset class="role-options">
-            <legend>Which best describes you? <span>Select all that apply</span></legend>
-            <label><input type="checkbox" name="roles" value="Singer"> Singer</label>
-            <label><input type="checkbox" name="roles" value="Songwriter"> Songwriter</label>
-            <label><input type="checkbox" name="roles" value="Instrumentalist"> Instrumentalist</label>
-            <label><input type="checkbox" name="roles" value="Producer"> Producer</label>
-            <label><input type="checkbox" name="roles" value="Music fan"> Music fan</label>
-          </fieldset>
-          <div class="signup-step-actions">
-            <button class="button button-outline" id="signup-back" type="button">Back</button>
-            <button class="button button-primary account-submit" type="submit">Create account</button>
-          </div>
-        </div>
-      </form>
-      <form class="account-form" id="login-form" hidden>
-        <label>Email
-          <input name="email" type="email" autocomplete="email" maxlength="254" required>
-        </label>
-        <label>Password
-          <input name="password" type="password" autocomplete="current-password" required>
-        </label>
-        <button class="button button-primary account-submit" type="submit">Log in</button>
-      </form>
-      <p class="account-demo-note">This prototype stores accounts in this browser only. Passwords are hashed, but this is not secure production authentication.</p>
+      <p class="account-dialog-description" id="account-dialog-description">This is a student prototype. You cannot actually sign up or log in.</p>
+      <p class="account-demo-note">Account creation and login are not available in this prototype. No account information is collected or stored.</p>
+      <button class="button button-primary" type="button" data-dialog-close>Got it</button>
     </dialog>
     <dialog class="account-dialog membership-dialog" id="membership-dialog" aria-labelledby="membership-title">
       <div class="account-dialog-heading">
         <div>
           <p class="eyebrow">COMMUNITY CHORD</p>
-          <h2 id="membership-title">Community membership</h2>
+          <h2 id="membership-title">Membership</h2>
         </div>
-        <button class="account-close" id="membership-close" type="button" aria-label="Close membership details">×</button>
+        <button class="account-close" id="membership-close" type="button" aria-label="Close membership notice">×</button>
       </div>
-      <p class="account-dialog-description">Support a welcoming music community and help it keep growing.</p>
-      <section class="membership-price-card" aria-label="Membership price">
-        <div>
-          <p class="eyebrow">MEMBERSHIP</p>
-          <h3>Community supporter</h3>
-        </div>
-        <p class="membership-price"><strong>$5</strong><span> / month</span></p>
-      </section>
-      <div class="membership-purchase-area">
-        <button class="button button-primary" id="membership-purchase" type="button">Purchase membership</button>
-        <p class="membership-message" id="membership-message" role="status" aria-live="polite"></p>
-      </div>
-      <p class="account-demo-note">This is a demo purchase area. Payments are not connected, no payment details are collected, and no charge will be made.</p>
+      <p class="account-dialog-description">This is a student prototype. You cannot view or buy a membership.</p>
+      <p class="account-demo-note">Membership plans and purchasing are unavailable. No payment details are collected and no charge will be made.</p>
+      <button class="button button-primary" id="membership-purchase" type="button">Got it</button>
     </dialog>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </body>
