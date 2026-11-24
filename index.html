@@ -176,10 +176,23 @@
         <button class="button button-outline" id="profile-action" type="button" data-account-action="signup">Create a demo profile</button>
          <div class="profile-connections" id="profile-connections" hidden aria-live="polite">
            <div class="connections-heading">
-             <p class="eyebrow">YOUR BANDMATE NETWORK</p>
-             <h3>My connections</h3>
+             <p class="eyebrow">YOUR MUSIC COMMUNITY</p>
+             <h3>My activity</h3>
            </div>
-           <div class="connections-list" id="connections-list"></div>
+           <div class="profile-activity-grid">
+             <section class="profile-activity-group" aria-labelledby="profile-bandmates-title">
+               <h4 id="profile-bandmates-title">Bandmates</h4>
+               <div class="connections-list" id="connections-list"></div>
+             </section>
+             <section class="profile-activity-group" aria-labelledby="profile-events-title">
+               <h4 id="profile-events-title">Events</h4>
+               <div class="connections-list" id="signed-up-events-list"></div>
+             </section>
+             <section class="profile-activity-group" aria-labelledby="profile-communities-title">
+               <h4 id="profile-communities-title">Communities</h4>
+               <div class="connections-list" id="joined-communities-list"></div>
+             </section>
+           </div>
          </div>
       </section>
     </main>

@@ -54,13 +54,19 @@
   function renderConnections() {
     const panel = document.querySelector("#profile-connections");
     const list = document.querySelector("#connections-list");
+    const eventsList = document.querySelector("#signed-up-events-list");
+    const communitiesList = document.querySelector("#joined-communities-list");
     if (!demoProfile) {
       panel.hidden = true;
       list.innerHTML = "";
+      eventsList.innerHTML = "";
+      communitiesList.innerHTML = "";
       return;
     }
     panel.hidden = false;
     const connections = data.musicians.filter((person) => connected.has(person.id));
+    const signedUpEvents = data.events.filter((item) => rsvps.has(item.id));
+    const joinedCommunities = data.communities.filter((item) => joined.has(item.id));
     list.innerHTML = connections.length
       ? connections.map((person) => `
         <article class="connection-card">
@@ -71,7 +77,27 @@
           </div>
         </article>
       `).join("")
-      : '<p class="connections-empty">You have no connections yet.</p>';
+      : '<p class="connections-empty">No connected bandmates yet.</p>';
+    eventsList.innerHTML = signedUpEvents.length
+      ? signedUpEvents.map((item) => `
+        <article class="connection-card">
+          <div class="connection-card-copy">
+            <h4>${escapeHtml(item.name)}</h4>
+            <p>${escapeHtml(item.day)} ${escapeHtml(item.month)} · ${escapeHtml(item.venue)}</p>
+          </div>
+        </article>
+      `).join("")
+      : '<p class="connections-empty">No event sign-ups yet.</p>';
+    communitiesList.innerHTML = joinedCommunities.length
+      ? joinedCommunities.map((item) => `
+        <article class="connection-card">
+          <div class="connection-card-copy">
+            <h4>${escapeHtml(item.name)}</h4>
+            <p>${escapeHtml(item.category)}</p>
+          </div>
+        </article>
+      `).join("")
+      : '<p class="connections-empty">No communities joined yet.</p>';
   }
 
   function renderDemoProfile() {
@@ -407,6 +433,7 @@
       if (joined.has(id)) joined.delete(id);
       else joined.add(id);
       renderCommunities();
+      renderConnections();
       showToast(joined.has(id) ? `You joined ${community.name}.` : `You left ${community.name}.`);
       return;
     }
@@ -418,6 +445,7 @@
       if (rsvps.has(id)) rsvps.delete(id);
       else rsvps.add(id);
       renderEvents();
+      renderConnections();
       showToast(rsvps.has(id) ? `You're on the list for ${eventInfo.name}.` : `RSVP removed for ${eventInfo.name}.`);
     }
   });

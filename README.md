@@ -12,6 +12,7 @@ Explore the prototype at **[x2025fbx.github.io/community-chord](https://x2025fbx
 - Open full musician profiles, browse suggested matches, and make temporary demo connections.
 - Create or edit a demo musician profile without an account, email address, or password.
 - Join music communities, RSVP to events, and share collaboration ideas.
+- See connected bandmates, signed-up events, and joined communities in your demo profile.
 - See clearly labeled illustrative community-growth statistics.
 - Expand the communities and events previews to see all available listings, then collapse them with “View less.”
 - View the membership notice; no real payments are processed.
