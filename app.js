@@ -3,6 +3,10 @@
   const connected = new Set();
   const joined = new Set();
   const rsvps = new Set();
+  const accountStorageKey = "communityChordAccounts";
+  const accountSessionStorageKey = "communityChordActiveAccount";
+  let currentAccount = null;
+  let signupCredentials = null;
   let matchOffset = 0;
 
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
@@ -16,6 +20,285 @@
     window.clearTimeout(showToast.timeout);
     showToast.timeout = window.setTimeout(() => toast.classList.remove("is-visible"), 2600);
   }
+
+  function setAccountMessage(message) {
+    document.querySelector("#account-message").textContent = message;
+  }
+
+  function readAccounts() {
+    try {
+      const saved = window.localStorage.getItem(accountStorageKey);
+      const accounts = saved ? JSON.parse(saved) : [];
+      if (!Array.isArray(accounts) || accounts.some((account) =>
+        !account ||
+        typeof account.name !== "string" ||
+        typeof account.music !== "string" ||
+        typeof account.instruments !== "string" ||
+        typeof account.artists !== "string" ||
+        !Array.isArray(account.roles) ||
+        (account.email !== undefined && typeof account.email !== "string") ||
+        (account.passwordHash !== undefined && typeof account.passwordHash !== "string") ||
+        (account.passwordSalt !== undefined && typeof account.passwordSalt !== "string")
+      )) throw new Error("Saved accounts are not in the expected format.");
+      return accounts;
+    } catch (error) {
+      console.error("Could not read saved Community Chord accounts.", error);
+      setAccountMessage("Saved accounts could not be read in this browser. Check browser storage and try again.");
+      return null;
+    }
+  }
+
+  function restoreAccountSession() {
+    try {
+      const email = window.sessionStorage.getItem(accountSessionStorageKey);
+      if (!email) return;
+      const accounts = readAccounts();
+      if (!accounts) return;
+      currentAccount = accounts.find((account) => account.email?.toLowerCase() === email) || null;
+      if (!currentAccount) window.sessionStorage.removeItem(accountSessionStorageKey);
+    } catch (error) {
+      console.error("Could not restore the Community Chord login session.", error);
+      setAccountMessage("Your login session could not be restored in this browser.");
+    }
+  }
+
+  function saveAccountSession(email) {
+    try {
+      window.sessionStorage.setItem(accountSessionStorageKey, email);
+      return true;
+    } catch (error) {
+      console.error("Could not save the Community Chord login session.", error);
+      return false;
+    }
+  }
+
+  function clearAccountSession() {
+    try {
+      window.sessionStorage.removeItem(accountSessionStorageKey);
+      return true;
+    } catch (error) {
+      console.error("Could not clear the Community Chord login session.", error);
+      return false;
+    }
+  }
+
+  function showAccountDialog(mode) {
+    const dialog = document.querySelector("#account-dialog");
+    const isSignup = mode === "signup";
+    document.querySelector("#account-dialog-title").textContent = isSignup ? "Create your account" : "Log in";
+    document.querySelector("#account-dialog-description").textContent = isSignup
+      ? "Start with your email and password."
+      : "Enter your email and password.";
+    document.querySelector("#signup-form").hidden = !isSignup;
+    document.querySelector("#login-form").hidden = isSignup;
+    document.querySelector("#signup-form").reset();
+    document.querySelector("#login-form").reset();
+    signupCredentials = null;
+    setSignupStep("credentials");
+    setAccountMessage("");
+    dialog.showModal();
+  }
+
+  function setSignupStep(step) {
+    const showCredentials = step === "credentials";
+    const credentialsStep = document.querySelector("#signup-credentials");
+    const profileStep = document.querySelector("#signup-profile");
+    credentialsStep.hidden = !showCredentials;
+    profileStep.hidden = showCredentials;
+    credentialsStep.querySelectorAll("input").forEach((input) => { input.disabled = !showCredentials; });
+    profileStep.querySelectorAll("input").forEach((input) => { input.disabled = showCredentials; });
+  }
+
+  async function hashPassword(password) {
+    if (!window.crypto?.subtle) throw new Error("Secure password hashing is unavailable in this browser.");
+    const salt = window.crypto.getRandomValues(new Uint8Array(16));
+    const key = await window.crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveBits"]);
+    const bits = await window.crypto.subtle.deriveBits({ name: "PBKDF2", salt, iterations: 210000, hash: "SHA-256" }, key, 256);
+    const toHex = (bytes) => Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+    return { salt: toHex(salt), hash: toHex(new Uint8Array(bits)) };
+  }
+
+  async function verifyPassword(password, saltHex, expectedHash) {
+    if (!window.crypto?.subtle) throw new Error("Secure password hashing is unavailable in this browser.");
+    if (!/^[\da-f]{32}$/i.test(saltHex)) return false;
+    const salt = new Uint8Array(saltHex.match(/.{2}/g).map((byte) => Number.parseInt(byte, 16)));
+    const key = await window.crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveBits"]);
+    const bits = await window.crypto.subtle.deriveBits({ name: "PBKDF2", salt, iterations: 210000, hash: "SHA-256" }, key, 256);
+    const hash = Array.from(new Uint8Array(bits), (byte) => byte.toString(16).padStart(2, "0")).join("");
+    return hash === expectedHash;
+  }
+
+  function displayList(value) {
+    return value.split(",").map((item) => item.trim()).filter(Boolean).join(" · ");
+  }
+
+  function renderAccount() {
+    const name = currentAccount?.name || "Guest musician";
+    const initials = currentAccount
+      ? currentAccount.name.trim().split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase()
+      : "G";
+    document.querySelector(".header-profile .avatar").textContent = initials;
+    document.querySelector(".header-name").textContent = currentAccount?.name || "Guest";
+    document.querySelector(".header-profile").setAttribute("aria-label", `View ${currentAccount ? `${name}'s` : "guest"} profile`);
+    document.querySelectorAll('[data-account-action="signup"], [data-account-action="login"]')
+      .forEach((button) => { button.hidden = Boolean(currentAccount); });
+    document.querySelector("#logout-button").hidden = !currentAccount;
+    document.querySelector("#profile-avatar").textContent = initials;
+    document.querySelector("#profile-title").textContent = name;
+    document.querySelector("#profile-location").textContent = currentAccount
+      ? "Community musician · Here to make music"
+      : "Sign up to create your profile";
+    document.querySelector("#profile-instruments").textContent = currentAccount
+      ? displayList(currentAccount.instruments)
+      : "Add your instruments when you sign up";
+    document.querySelector("#profile-music").textContent = currentAccount
+      ? displayList(currentAccount.music)
+      : "Add your favorite music when you sign up";
+    document.querySelector("#profile-artists").textContent = currentAccount
+      ? displayList(currentAccount.artists)
+      : "Add your favorite artists when you sign up";
+    document.querySelector("#profile-roles").textContent = currentAccount
+      ? currentAccount.roles.join(" · ")
+      : "Singer, songwriter, musician, and more";
+    const profileAction = document.querySelector("#profile-action");
+    profileAction.dataset.accountAction = currentAccount ? "" : "signup";
+    profileAction.textContent = currentAccount ? "Find my bandmates ↗" : "Sign up to create your profile";
+  }
+
+  document.querySelectorAll('[data-account-action="signup"], [data-account-action="login"]').forEach((button) => {
+    button.addEventListener("click", () => {
+      showAccountDialog(button.dataset.accountAction);
+    });
+  });
+  document.querySelector("#logout-button").addEventListener("click", () => {
+    const sessionCleared = clearAccountSession();
+    currentAccount = null;
+    renderAccount();
+    showToast(sessionCleared
+      ? "You have been logged out."
+      : "You have been logged out, but this browser could not clear the saved session.");
+  });
+  document.querySelector("[data-dialog-close]").addEventListener("click", () => {
+    document.querySelector("#account-dialog").close();
+  });
+  document.querySelector("#account-dialog").addEventListener("click", (event) => {
+    if (event.target === event.currentTarget) event.currentTarget.close();
+  });
+
+  document.querySelector("#signup-continue").addEventListener("click", () => {
+    const credentialInputs = [...document.querySelector("#signup-credentials").querySelectorAll("input")];
+    if (!credentialInputs.every((input) => input.reportValidity())) return;
+    const [emailInput, passwordInput, confirmationInput] = credentialInputs;
+    if (passwordInput.value !== confirmationInput.value) {
+      setAccountMessage("The passwords do not match.");
+      confirmationInput.focus();
+      return;
+    }
+    signupCredentials = {
+      email: emailInput.value.trim().toLowerCase(),
+      password: passwordInput.value
+    };
+    setAccountMessage("");
+    setSignupStep("profile");
+    document.querySelector("#signup-profile input").focus();
+  });
+  document.querySelector("#signup-back").addEventListener("click", () => {
+    setAccountMessage("");
+    setSignupStep("credentials");
+    document.querySelector("#signup-credentials input").focus();
+  });
+
+  document.querySelector("#signup-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (!signupCredentials) {
+      setAccountMessage("Enter your email and password to continue.");
+      setSignupStep("credentials");
+      return;
+    }
+    const formData = new FormData(form);
+    const account = {
+      name: formData.get("name").trim(),
+      music: formData.get("music").trim(),
+      instruments: formData.get("instruments").trim(),
+      artists: formData.get("artists").trim(),
+      roles: formData.getAll("roles")
+    };
+    if ([account.name, account.music, account.instruments, account.artists].some((value) => !value)) {
+      setAccountMessage("Please fill in each profile field.");
+      return;
+    }
+    const accounts = readAccounts();
+    if (!accounts) return;
+    if (accounts.some((savedAccount) => savedAccount.email?.toLowerCase() === signupCredentials.email)) {
+      setAccountMessage("That email already has an account. Log in instead.");
+      return;
+    }
+    if (account.roles.length === 0) {
+      setAccountMessage("Choose at least one role that describes you.");
+      return;
+    }
+    try {
+      const passwordData = await hashPassword(signupCredentials.password);
+      account.email = signupCredentials.email;
+      account.passwordSalt = passwordData.salt;
+      account.passwordHash = passwordData.hash;
+    } catch (error) {
+      console.error("Could not hash the Community Chord password.", error);
+      setAccountMessage("Password setup is unavailable in this browser. Try a modern browser over HTTPS.");
+      return;
+    }
+    try {
+      window.localStorage.setItem(accountStorageKey, JSON.stringify([...accounts, account]));
+    } catch (error) {
+      console.error("Could not save the Community Chord account.", error);
+      setAccountMessage("Your account could not be saved in this browser. Check browser storage and try again.");
+      return;
+    }
+    currentAccount = account;
+    const sessionSaved = saveAccountSession(account.email);
+    renderAccount();
+    form.reset();
+    document.querySelector("#account-dialog").close();
+    showToast(sessionSaved
+      ? `Welcome to Community Chord, ${account.name}!`
+      : "You are signed in, but this browser could not save your session.");
+  });
+
+  document.querySelector("#login-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const email = formData.get("email").trim().toLowerCase();
+    const password = formData.get("password");
+    const accounts = readAccounts();
+    if (!accounts) return;
+    const account = accounts.find((savedAccount) => savedAccount.email?.toLowerCase() === email);
+    if (!account?.passwordSalt || !account.passwordHash) {
+      setAccountMessage("Incorrect email or password.");
+      return;
+    }
+    let isValidPassword;
+    try {
+      isValidPassword = await verifyPassword(password, account.passwordSalt, account.passwordHash);
+    } catch (error) {
+      console.error("Could not verify the Community Chord password.", error);
+      setAccountMessage("Password login is unavailable in this browser. Try a modern browser over HTTPS.");
+      return;
+    }
+    if (!isValidPassword) {
+      setAccountMessage("Incorrect email or password.");
+      return;
+    }
+    currentAccount = account;
+    const sessionSaved = saveAccountSession(account.email);
+    renderAccount();
+    form.reset();
+    document.querySelector("#account-dialog").close();
+    showToast(sessionSaved
+      ? `Welcome back, ${account.name}!`
+      : "You are signed in, but this browser could not save your session.");
+  });
 
   function initialsAvatar(initials, color, extraClass = "") {
     return `<span class="avatar avatar-${escapeHtml(color)} ${extraClass}" aria-hidden="true">${escapeHtml(initials)}</span>`;
@@ -132,6 +415,11 @@
   });
 
   document.addEventListener("click", (event) => {
+    if (event.target.closest("#profile-action") && currentAccount) {
+      window.location.hash = "discover";
+      return;
+    }
+
     const connectButton = event.target.closest("[data-connect]");
     if (connectButton) {
       const id = connectButton.dataset.connect;
@@ -171,7 +459,7 @@
     const input = document.querySelector("#idea-input");
     const text = input.value.trim();
     if (!text) return;
-    data.ideas.unshift({ author: "Jordan Lee", initials: "J", color: "lilac", text });
+    data.ideas.unshift({ author: currentAccount?.name || "Guest musician", initials: currentAccount ? currentAccount.name[0].toUpperCase() : "G", color: "lilac", text });
     renderIdeas();
     input.value = "";
     showToast("Your idea is out there. Let the collaboration begin!");
@@ -183,4 +471,6 @@
   renderCommunities();
   renderEvents();
   renderIdeas();
+  restoreAccountSession();
+  renderAccount();
 })();

@@ -35,6 +35,8 @@ button { color: inherit; }
 .nav-link.is-active { position: relative; }
 .nav-link.is-active::after { content: ""; height: 2px; position: absolute; left: 0; right: 0; bottom: -28px; background: var(--purple); border-radius: 2px; }
 .header-membership { min-height: 36px; padding: 0 12px; font-size: 12px; white-space: nowrap; }
+.header-account-button { min-height: 36px; padding: 0 12px; font-size: 12px; white-space: nowrap; }
+.header-account-button[hidden] { display: none; }
 .header-profile { display: flex; align-items: center; gap: 9px; font-size: 13px; }
 .header-name { color: #e9e5ef; }
 .avatar { width: 44px; height: 44px; border-radius: 50%; display: inline-grid; flex: 0 0 auto; place-items: center; color: white; font-family: var(--font-display); font-size: 14px; font-weight: 700; border: 1px solid rgba(255,255,255,.13); }
@@ -208,6 +210,30 @@ h1, h2, h3 { font-family: var(--font-display); }
 .profile-details p { margin: 2px 0 0; color: #d1cbd9; font-size: 10px; }
 .detail-muted { color: #706a7b; margin: 0 2px; }
 .profile-section > .button { min-height: 39px; padding: 0 11px; white-space: nowrap; font-size: 10px; }
+.account-dialog { width: min(520px, calc(100% - 32px)); max-height: min(90vh, 760px); padding: 25px; overflow-y: auto; border: 1px solid #554a70; border-radius: 14px; background: #191622; color: var(--text); box-shadow: 0 24px 80px #000b; }
+.account-dialog::backdrop { background: #08070dbb; backdrop-filter: blur(4px); }
+.account-dialog-heading { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
+.account-dialog-heading .eyebrow { margin-bottom: 5px; }
+.account-dialog-heading h2 { margin: 0; font-size: 24px; letter-spacing: -.7px; }
+.account-dialog-description { margin: 8px 0 17px; color: var(--muted); font-size: 12px; }
+.account-close { width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-raised); color: var(--text); font-size: 23px; line-height: 1; cursor: pointer; }
+.account-form { display: grid; gap: 12px; }
+.account-form[hidden] { display: none; }
+.signup-step { display: grid; gap: 12px; }
+.signup-step[hidden] { display: none; }
+.signup-step-actions { display: flex; gap: 10px; align-items: center; }
+.account-form > label, .signup-step > label { display: grid; gap: 5px; color: #e5e0ed; font-size: 11px; font-weight: 600; }
+.account-form > label span, .signup-step > label span, .role-options legend span { color: var(--muted); font-weight: 400; }
+.account-form input:not([type="checkbox"]) { width: 100%; min-height: 40px; padding: 0 11px; border: 1px solid #403a50; border-radius: 7px; outline: none; background: #100e19; color: var(--text); font-size: 12px; }
+.account-form input:focus { border-color: #9c83e7; box-shadow: 0 0 0 3px #a78bfa22; }
+.role-options { display: flex; flex-wrap: wrap; gap: 8px 13px; margin: 0; padding: 11px; border: 1px solid #403a50; border-radius: 8px; }
+.role-options legend { padding: 0 5px; color: #e5e0ed; font-size: 11px; font-weight: 600; }
+.role-options label { display: inline-flex; align-items: center; gap: 5px; color: #d1cbd9; font-size: 11px; }
+.role-options input { accent-color: #9c83e7; }
+.account-submit { justify-self: start; margin-top: 3px; }
+.account-message { min-height: 0; margin: 0; color: #f0a8a8; font-size: 11px; }
+.account-message:empty { display: none; }
+.account-demo-note { margin: 16px 0 0; color: #898395; font-size: 10px; line-height: 1.5; }
 .site-footer { min-height: 90px; padding: 20px max(5.5vw, calc((100vw - 1200px) / 2)); display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid rgba(255,255,255,.08); }
 .footer-brand { font-size: 14px; }
 .footer-brand .brand-mark { width: 26px; height: 26px; font-size: 16px; }
@@ -219,6 +245,7 @@ h1, h2, h3 { font-family: var(--font-display); }
   .site-header { padding: 0 24px; gap: 18px; }
   .main-nav { gap: 16px; }
   .header-name { display: none; }
+  .header-account-button, .header-membership { padding: 0 9px; }
   .hero { gap: 35px; }
   .musician-grid { grid-template-columns: repeat(2, 1fr); }
   .profile-section { grid-template-columns: 1fr 1.5fr; }
