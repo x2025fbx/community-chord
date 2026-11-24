@@ -42,7 +42,9 @@
         !Array.isArray(account.roles) ||
         (account.email !== undefined && typeof account.email !== "string") ||
         (account.passwordHash !== undefined && typeof account.passwordHash !== "string") ||
-        (account.passwordSalt !== undefined && typeof account.passwordSalt !== "string")
+        (account.passwordSalt !== undefined && typeof account.passwordSalt !== "string") ||
+        (account.connections !== undefined && (!Array.isArray(account.connections) ||
+          account.connections.some((id) => typeof id !== "string")))
       )) throw new Error("Saved accounts are not in the expected format.");
       return accounts;
     } catch (error) {
@@ -59,7 +61,14 @@
       const accounts = readAccounts();
       if (!accounts) return;
       currentAccount = accounts.find((account) => account.email?.toLowerCase() === email) || null;
-      if (!currentAccount) window.sessionStorage.removeItem(accountSessionStorageKey);
+      if (!currentAccount) {
+        window.sessionStorage.removeItem(accountSessionStorageKey);
+        return;
+      }
+      connected.clear();
+      (currentAccount.connections || []).forEach((id) => {
+        if (data.musicians.some((person) => person.id === id)) connected.add(id);
+      });
     } catch (error) {
       console.error("Could not restore the Community Chord login session.", error);
       setAccountMessage("Your login session could not be restored in this browser.");
@@ -136,6 +145,46 @@
     return value.split(",").map((item) => item.trim()).filter(Boolean).join(" · ");
   }
 
+  function saveCurrentAccountConnections() {
+    if (!currentAccount) return true;
+    const accounts = readAccounts();
+    if (!accounts) return false;
+    currentAccount.connections = [...connected];
+    const accountIndex = accounts.findIndex((account) =>
+      account.email?.toLowerCase() === currentAccount.email?.toLowerCase());
+    if (accountIndex === -1) return false;
+    accounts[accountIndex] = currentAccount;
+    try {
+      window.localStorage.setItem(accountStorageKey, JSON.stringify(accounts));
+      return true;
+    } catch (error) {
+      console.error("Could not save Community Chord connections.", error);
+      return false;
+    }
+  }
+
+  function renderConnections() {
+    const panel = document.querySelector("#profile-connections");
+    const list = document.querySelector("#connections-list");
+    if (!currentAccount) {
+      panel.hidden = true;
+      list.innerHTML = "";
+      return;
+    }
+    const connections = data.musicians.filter((person) => connected.has(person.id));
+    list.innerHTML = connections.length
+      ? connections.map((person) => `
+        <article class="connection-card">
+          ${initialsAvatar(person.initials, person.color)}
+          <div class="connection-card-copy">
+            <h4>${escapeHtml(person.name)}</h4>
+            <p>${escapeHtml(person.instrument)} · ${escapeHtml(person.location)}</p>
+          </div>
+        </article>
+      `).join("")
+      : '<p class="connections-empty">You have no connections yet.</p>';
+  }
+
   function renderAccount() {
     const name = currentAccount?.name || "Guest musician";
     const initials = currentAccount
@@ -167,6 +216,7 @@
     const profileAction = document.querySelector("#profile-action");
     profileAction.dataset.accountAction = currentAccount ? "" : "signup";
     profileAction.textContent = currentAccount ? "Find my bandmates ↗" : "Sign up to create your profile";
+    renderConnections();
   }
 
   document.querySelectorAll('[data-account-action="signup"], [data-account-action="login"]').forEach((button) => {
@@ -177,6 +227,7 @@
   document.querySelector("#logout-button").addEventListener("click", () => {
     const sessionCleared = clearAccountSession();
     currentAccount = null;
+    connected.clear();
     renderAccount();
     showToast(sessionCleared
       ? "You have been logged out."
@@ -240,7 +291,8 @@
       music: formData.get("music").trim(),
       instruments: formData.get("instruments").trim(),
       artists: formData.get("artists").trim(),
-      roles: formData.getAll("roles")
+      roles: formData.getAll("roles"),
+      connections: []
     };
     if ([account.name, account.music, account.instruments, account.artists].some((value) => !value)) {
       setAccountMessage("Please fill in each profile field.");
@@ -274,6 +326,7 @@
       return;
     }
     currentAccount = account;
+    connected.clear();
     const sessionSaved = saveAccountSession(account.email);
     renderAccount();
     form.reset();
@@ -309,6 +362,10 @@
       return;
     }
     currentAccount = account;
+    connected.clear();
+    (account.connections || []).forEach((id) => {
+      if (data.musicians.some((person) => person.id === id)) connected.add(id);
+    });
     const sessionSaved = saveAccountSession(account.email);
     renderAccount();
     form.reset();
@@ -467,7 +524,9 @@
 
   document.addEventListener("click", (event) => {
     if (event.target.closest("#profile-action") && currentAccount) {
-      window.location.hash = "discover";
+      renderConnections();
+      document.querySelector("#profile-connections").hidden = false;
+      document.querySelector("#profile-connections").scrollIntoView({ behavior: "smooth", block: "nearest" });
       return;
     }
 
@@ -477,9 +536,15 @@
       const person = data.musicians.find((item) => item.id === id);
       if (connected.has(id)) connected.delete(id);
       else connected.add(id);
+      const connectionsSaved = saveCurrentAccountConnections();
       renderMatches();
       renderMusicians();
-      showToast(connected.has(id) ? `You’re connected with ${person.name}!` : `Connection with ${person.name} removed.`);
+      renderConnections();
+      showToast(!connectionsSaved
+        ? "This change could not be saved in browser storage."
+        : connected.has(id)
+          ? `You’re connected with ${person.name}!`
+          : `Connection with ${person.name} removed.`);
       return;
     }
 
