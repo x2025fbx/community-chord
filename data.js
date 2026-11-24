@@ -1,7 +1,10 @@
 // Fictional sample content for the Community Chord prototype.
 window.COMMUNITY_CHORD_DATA = {
   growth: {
-    collaborations: 84
+    musicians: 12480,
+    collaborations: 8420,
+    communities: 1240,
+    events: 3680
   },
   currentUser: {
     name: "Jordan Lee",
@@ -38,20 +41,20 @@ window.COMMUNITY_CHORD_DATA = {
     { id: "gabriel-ross", name: "Gabriel Ross", instrument: "Trumpet", genres: ["Jazz", "Soul", "Funk"], skill: "Intermediate", location: "Downtown Halifax", artists: ["Roy Hargrove", "Robert Glasper"], lookingFor: ["Keys", "Bass"], initials: "GR", color: "orange", bio: "Trumpet player looking for a small group to explore jazz standards and new grooves." }
   ],
   communities: [
-    { id: "hfx-indie", name: "Halifax Indie Collective", category: "INDIE ROCK · HALIFAX", members: 284, description: "For bedroom demos, basement shows, and the people who make them happen.", color: "community-purple", mark: "✳" },
-    { id: "dream-pop", name: "Dream Pop Daydreamers", category: "DREAM POP · ONLINE + HALIFAX", members: 176, description: "Soft focus, big reverb, and a community for making hazy things together.", color: "community-blue", mark: "☾" },
-    { id: "song-circle", name: "The Halifax Song Circle", category: "SONGWRITING · HRM", members: 132, description: "Trade a verse, find a co-writer, and get that half-finished song unstuck.", color: "community-orange", mark: "✎" },
-    { id: "celtic-jammers", name: "Celtic Kitchen Sessions", category: "FOLK · CELTIC · HRM", members: 219, description: "For fiddle tunes, guitar players, and welcoming jam nights across Halifax.", color: "community-purple", mark: "♪" },
-    { id: "jazz-after-dark", name: "Jazz After Dark", category: "JAZZ · SOUL · HALIFAX", members: 158, description: "Meet improvisers, find a rhythm section, and plan late-night sessions.", color: "community-blue", mark: "♬" },
-    { id: "beatmakers", name: "HRM Beatmakers", category: "BEATS · HIP-HOP · PRODUCER", members: 246, description: "Share work-in-progress beats and connect with vocalists and visual artists.", color: "community-orange", mark: "◉" },
-    { id: "acoustic-coastal", name: "Coastal Acoustic Circle", category: "ACOUSTIC · FOLK · HALIFAX", members: 141, description: "Unplugged meetups for acoustic songwriters and laid-back performers.", color: "community-blue", mark: "≈" },
-    { id: "punk-basement", name: "Halifax Basement Noise", category: "PUNK · SHOEGAZE · HRM", members: 192, description: "Find bands, swap rehearsal spaces, and hear about DIY basement shows.", color: "community-purple", mark: "⚡" },
-    { id: "classical-collabs", name: "Classical Crossovers", category: "CLASSICAL · AMBIENT · DARTMOUTH", members: 116, description: "Classically trained musicians exploring modern, ambient, and cross-genre projects.", color: "community-orange", mark: "♩" },
-    { id: "halifax-soul-club", name: "Halifax Soul Club", category: "SOUL · R&B · HALIFAX", members: 203, description: "Vocalists, players, and listeners sharing deep cuts and finding a groove.", color: "community-blue", mark: "♡" },
-    { id: "bedford-acoustic", name: "Bedford Acoustic Sessions", category: "ACOUSTIC · SONGWRITING · BEDFORD", members: 97, description: "Low-key acoustic meetups for works in progress and new collaborations.", color: "community-orange", mark: "♫" },
-    { id: "hrm-electronic", name: "HRM Electronic Producers", category: "ELECTRONIC · PRODUCERS · ONLINE", members: 318, description: "Trade feedback, find vocal collaborators, and share new sounds in progress.", color: "community-purple", mark: "◉" },
-    { id: "halifax-jazz-lab", name: "The Halifax Jazz Lab", category: "JAZZ · IMPROV · DARTMOUTH", members: 164, description: "A welcoming spot for improvisers, small ensembles, and curious beginners.", color: "community-blue", mark: "♬" },
-    { id: "indie-songwriters", name: "Atlantic Indie Songwriters", category: "INDIE · SONGWRITING · ATLANTIC CANADA", members: 231, description: "Share demos, swap honest feedback, and find your next co-writer.", color: "community-purple", mark: "✎" }
+    { id: "hfx-indie", name: "Halifax Indie Collective", category: "INDIE ROCK · HALIFAX", members: 1284, description: "For bedroom demos, basement shows, and the people who make them happen.", color: "community-purple", mark: "✳" },
+    { id: "dream-pop", name: "Dream Pop Daydreamers", category: "DREAM POP · ONLINE + HALIFAX", members: 1176, description: "Soft focus, big reverb, and a community for making hazy things together.", color: "community-blue", mark: "☾" },
+    { id: "song-circle", name: "The Halifax Song Circle", category: "SONGWRITING · HRM", members: 1132, description: "Trade a verse, find a co-writer, and get that half-finished song unstuck.", color: "community-orange", mark: "✎" },
+    { id: "celtic-jammers", name: "Celtic Kitchen Sessions", category: "FOLK · CELTIC · HRM", members: 1219, description: "For fiddle tunes, guitar players, and welcoming jam nights across Halifax.", color: "community-purple", mark: "♪" },
+    { id: "jazz-after-dark", name: "Jazz After Dark", category: "JAZZ · SOUL · HALIFAX", members: 1158, description: "Meet improvisers, find a rhythm section, and plan late-night sessions.", color: "community-blue", mark: "♬" },
+    { id: "beatmakers", name: "HRM Beatmakers", category: "BEATS · HIP-HOP · PRODUCER", members: 1246, description: "Share work-in-progress beats and connect with vocalists and visual artists.", color: "community-orange", mark: "◉" },
+    { id: "acoustic-coastal", name: "Coastal Acoustic Circle", category: "ACOUSTIC · FOLK · HALIFAX", members: 1141, description: "Unplugged meetups for acoustic songwriters and laid-back performers.", color: "community-blue", mark: "≈" },
+    { id: "punk-basement", name: "Halifax Basement Noise", category: "PUNK · SHOEGAZE · HRM", members: 1192, description: "Find bands, swap rehearsal spaces, and hear about DIY basement shows.", color: "community-purple", mark: "⚡" },
+    { id: "classical-collabs", name: "Classical Crossovers", category: "CLASSICAL · AMBIENT · DARTMOUTH", members: 1116, description: "Classically trained musicians exploring modern, ambient, and cross-genre projects.", color: "community-orange", mark: "♩" },
+    { id: "halifax-soul-club", name: "Halifax Soul Club", category: "SOUL · R&B · HALIFAX", members: 1203, description: "Vocalists, players, and listeners sharing deep cuts and finding a groove.", color: "community-blue", mark: "♡" },
+    { id: "bedford-acoustic", name: "Bedford Acoustic Sessions", category: "ACOUSTIC · SONGWRITING · BEDFORD", members: 1097, description: "Low-key acoustic meetups for works in progress and new collaborations.", color: "community-orange", mark: "♫" },
+    { id: "hrm-electronic", name: "HRM Electronic Producers", category: "ELECTRONIC · PRODUCERS · ONLINE", members: 1318, description: "Trade feedback, find vocal collaborators, and share new sounds in progress.", color: "community-purple", mark: "◉" },
+    { id: "halifax-jazz-lab", name: "The Halifax Jazz Lab", category: "JAZZ · IMPROV · DARTMOUTH", members: 1164, description: "A welcoming spot for improvisers, small ensembles, and curious beginners.", color: "community-blue", mark: "♬" },
+    { id: "indie-songwriters", name: "Atlantic Indie Songwriters", category: "INDIE · SONGWRITING · ATLANTIC CANADA", members: 1231, description: "Share demos, swap honest feedback, and find your next co-writer.", color: "community-purple", mark: "✎" }
   ],
   events: [
     { id: "porch-sessions", day: "29", month: "NOV", name: "Porchlight Sessions", venue: "The Lantern · Halifax", detail: "Local artists · Doors at 7:30", tag: "LIVE MUSIC" },

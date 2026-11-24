@@ -14,6 +14,7 @@
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   })[character]);
+  const formatCount = (value) => new Intl.NumberFormat("en-US").format(value);
 
   function showToast(message) {
     const toast = document.querySelector("#toast");
@@ -316,10 +317,10 @@
   }
 
   function renderGrowthStats() {
-    document.querySelector("#growth-musicians").textContent = data.musicians.length;
-    document.querySelector("#growth-collaborations").textContent = data.growth.collaborations;
-    document.querySelector("#growth-communities").textContent = data.communities.length;
-    document.querySelector("#growth-events").textContent = data.events.length;
+    document.querySelector("#growth-musicians").textContent = formatCount(data.growth.musicians + (demoProfile ? 1 : 0));
+    document.querySelector("#growth-collaborations").textContent = formatCount(data.growth.collaborations);
+    document.querySelector("#growth-communities").textContent = formatCount(data.growth.communities);
+    document.querySelector("#growth-events").textContent = formatCount(data.growth.events);
   }
 
   function renderCommunities() {
@@ -328,7 +329,7 @@
       <article class="community-card ${escapeHtml(community.color)}">
         <div class="community-card-top"><span class="community-mark" aria-hidden="true">${escapeHtml(community.mark)}</span><span class="community-category">${escapeHtml(community.category)}</span></div>
         <h3>${escapeHtml(community.name)}</h3><p>${escapeHtml(community.description)}</p>
-        <div class="community-card-bottom"><span>${community.members + (joined.has(community.id) ? 1 : 0)} members</span>
+        <div class="community-card-bottom"><span>${formatCount(community.members + (joined.has(community.id) ? 1 : 0))} members</span>
           <button class="join-button ${joined.has(community.id) ? "is-joined" : ""}" type="button" data-join="${escapeHtml(community.id)}">${joined.has(community.id) ? "Joined ✓" : "Join community ↗"}</button>
         </div>
       </article>`).join("");
