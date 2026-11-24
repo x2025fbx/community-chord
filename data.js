@@ -28,7 +28,10 @@ window.COMMUNITY_CHORD_DATA = {
     { id: "song-circle", name: "The Halifax Song Circle", category: "SONGWRITING · HRM", members: 132, description: "Trade a verse, find a co-writer, and get that half-finished song unstuck.", color: "community-orange", mark: "✎" },
     { id: "celtic-jammers", name: "Celtic Kitchen Sessions", category: "FOLK · CELTIC · HRM", members: 219, description: "For fiddle tunes, guitar players, and welcoming jam nights across Halifax.", color: "community-purple", mark: "♪" },
     { id: "jazz-after-dark", name: "Jazz After Dark", category: "JAZZ · SOUL · HALIFAX", members: 158, description: "Meet improvisers, find a rhythm section, and plan late-night sessions.", color: "community-blue", mark: "♬" },
-    { id: "beatmakers", name: "HRM Beatmakers", category: "BEATS · HIP-HOP · PRODUCER", members: 246, description: "Share work-in-progress beats and connect with vocalists and visual artists.", color: "community-orange", mark: "◉" }
+    { id: "beatmakers", name: "HRM Beatmakers", category: "BEATS · HIP-HOP · PRODUCER", members: 246, description: "Share work-in-progress beats and connect with vocalists and visual artists.", color: "community-orange", mark: "◉" },
+    { id: "acoustic-coastal", name: "Coastal Acoustic Circle", category: "ACOUSTIC · FOLK · HALIFAX", members: 141, description: "Unplugged meetups for acoustic songwriters and laid-back performers.", color: "community-blue", mark: "≈" },
+    { id: "punk-basement", name: "Halifax Basement Noise", category: "PUNK · SHOEGAZE · HRM", members: 192, description: "Find bands, swap rehearsal spaces, and hear about DIY basement shows.", color: "community-purple", mark: "⚡" },
+    { id: "classical-collabs", name: "Classical Crossovers", category: "CLASSICAL · AMBIENT · DARTMOUTH", members: 116, description: "Classically trained musicians exploring modern, ambient, and cross-genre projects.", color: "community-orange", mark: "♩" }
   ],
   events: [
     { id: "porch-sessions", day: "29", month: "NOV", name: "Porchlight Sessions", venue: "The Lantern · Halifax", detail: "Local artists · Doors at 7:30", tag: "LIVE MUSIC" },

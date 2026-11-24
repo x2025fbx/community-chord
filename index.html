@@ -103,6 +103,9 @@
           <button class="filter-reset" id="clear-filters" type="button">Clear</button>
         </form>
         <div class="musician-grid" id="musician-list" aria-live="polite"></div>
+        <button class="text-button" id="toggle-musicians" type="button" aria-expanded="false" aria-controls="musician-list" hidden>
+          <span class="toggle-label">All musicians</span> <span class="toggle-icon" aria-hidden="true">→</span>
+        </button>
         <p class="empty-state" id="musician-empty" hidden>No musicians match those filters yet. Try changing your search.</p>
       </section>
 
