@@ -1,6 +1,6 @@
 # Community Chord
 
-Community Chord helps musicians discover bandmates, join genre communities, find local events, and share collaboration ideas.
+Community Chord is a student-prototype music community for musicians, singers, songwriters, and music lovers to find people to play with, collaborate on music, and discover artists and events.
 
 ## Live website
 
@@ -9,13 +9,12 @@ Explore the prototype at **[x2025fbx.github.io/community-chord](https://x2025fbx
 ## Features
 
 - Discover musicians with search and instrument, genre, and skill filters.
-- Browse suggested musician matches and connect with people.
+- Open full musician profiles, browse suggested matches, and make temporary demo connections.
+- Create or edit a demo musician profile without an account, email address, or password.
 - Join music communities, RSVP to events, and share collaboration ideas.
+- See clearly labeled illustrative community-growth statistics.
 - Expand the communities and events previews to see all available listings, then collapse them with “View less.”
-- View the $5/month membership and its demo purchase area; no real payments are processed.
-- Sign up with an email and password, then add your instruments, favorite music, and artists.
-- Log in with your email and password.
-- Log out to return to the guest profile and show the sign-up and login buttons again.
+- View the membership notice; no real payments are processed.
 - Use a responsive interface designed for desktop and mobile screens.
 
 ## Run locally
@@ -29,4 +28,4 @@ Open `index.html` in a modern browser. No build step, server, database, framewor
 - `data.js` contains fictional sample profiles, communities, events, and starter ideas.
 - `app.js` implements search, filters, matches, connections, community joins, event RSVPs, and idea sharing.
 
-This is a front-end prototype. Account details are stored in the browser and are available only in that browser; passwords are salted and hashed, but this is not secure production authentication. Signing up also logs you in. Your login session lasts until you log out or close the browser tab; other interactions reset when the page is reloaded. There is no backend.
+This is a front-end student prototype. Demo profiles, connections, community joins, event RSVPs, and shared ideas exist only in the current page and are cleared when it is refreshed. The musician, community, event, collaboration, and growth figures are fictional sample content, not live platform statistics. There is no backend, real account or login functionality, password collection, or payment processing.

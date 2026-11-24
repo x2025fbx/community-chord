@@ -1,5 +1,8 @@
 // Fictional sample content for the Community Chord prototype.
 window.COMMUNITY_CHORD_DATA = {
+  growth: {
+    collaborations: 28
+  },
   currentUser: {
     name: "Jordan Lee",
     instruments: ["Guitar"],

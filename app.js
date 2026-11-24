@@ -4,10 +4,7 @@
   const joined = new Set();
   const rsvps = new Set();
   const listPreviewLimit = 2;
-  const accountStorageKey = "communityChordAccounts";
-  const accountSessionStorageKey = "communityChordActiveAccount";
-  let currentAccount = null;
-  let signupCredentials = null;
+  let demoProfile = null;
   let matchOffset = 0;
   let musicianOffset = 0;
   let communitiesExpanded = false;
@@ -25,145 +22,44 @@
     showToast.timeout = window.setTimeout(() => toast.classList.remove("is-visible"), 2600);
   }
 
-  function setAccountMessage(message) {
-    document.querySelector("#account-message").textContent = message;
-  }
-
-  function readAccounts() {
-    try {
-      const saved = window.localStorage.getItem(accountStorageKey);
-      const accounts = saved ? JSON.parse(saved) : [];
-      if (!Array.isArray(accounts) || accounts.some((account) =>
-        !account ||
-        typeof account.name !== "string" ||
-        typeof account.music !== "string" ||
-        typeof account.instruments !== "string" ||
-        typeof account.artists !== "string" ||
-        !Array.isArray(account.roles) ||
-        (account.email !== undefined && typeof account.email !== "string") ||
-        (account.passwordHash !== undefined && typeof account.passwordHash !== "string") ||
-        (account.passwordSalt !== undefined && typeof account.passwordSalt !== "string") ||
-        (account.connections !== undefined && (!Array.isArray(account.connections) ||
-          account.connections.some((id) => typeof id !== "string")))
-      )) throw new Error("Saved accounts are not in the expected format.");
-      return accounts;
-    } catch (error) {
-      console.error("Could not read saved Community Chord accounts.", error);
-      setAccountMessage("Saved accounts could not be read in this browser. Check browser storage and try again.");
-      return null;
-    }
-  }
-
-  function restoreAccountSession() {
-    try {
-      const email = window.sessionStorage.getItem(accountSessionStorageKey);
-      if (!email) return;
-      const accounts = readAccounts();
-      if (!accounts) return;
-      currentAccount = accounts.find((account) => account.email?.toLowerCase() === email) || null;
-      if (!currentAccount) {
-        window.sessionStorage.removeItem(accountSessionStorageKey);
-        return;
-      }
-      connected.clear();
-      (currentAccount.connections || []).forEach((id) => {
-        if (data.musicians.some((person) => person.id === id)) connected.add(id);
-      });
-    } catch (error) {
-      console.error("Could not restore the Community Chord login session.", error);
-      setAccountMessage("Your login session could not be restored in this browser.");
-    }
-  }
-
-  function saveAccountSession(email) {
-    try {
-      window.sessionStorage.setItem(accountSessionStorageKey, email);
-      return true;
-    } catch (error) {
-      console.error("Could not save the Community Chord login session.", error);
-      return false;
-    }
-  }
-
-  function clearAccountSession() {
-    try {
-      window.sessionStorage.removeItem(accountSessionStorageKey);
-      return true;
-    } catch (error) {
-      console.error("Could not clear the Community Chord login session.", error);
-      return false;
-    }
-  }
-
   function showAccountDialog(mode) {
-    const dialog = document.querySelector("#account-dialog");
-    const isSignup = mode === "signup";
-    document.querySelector("#account-dialog-title").textContent = isSignup ? "Sign up unavailable" : "Log in unavailable";
-    document.querySelector("#account-dialog-description").textContent = isSignup
-      ? "This is a student prototype. You cannot actually sign up or create an account."
-      : "This is a student prototype. You cannot actually log in.";
-    dialog.showModal();
-  }
+    if (mode === "login") {
+      document.querySelector("#account-dialog").showModal();
+      return;
+    }
 
-  function setSignupStep(step) {
-    const showCredentials = step === "credentials";
-    const credentialsStep = document.querySelector("#signup-credentials");
-    const profileStep = document.querySelector("#signup-profile");
-    credentialsStep.hidden = !showCredentials;
-    profileStep.hidden = showCredentials;
-    credentialsStep.querySelectorAll("input").forEach((input) => { input.disabled = !showCredentials; });
-    profileStep.querySelectorAll("input").forEach((input) => { input.disabled = showCredentials; });
-  }
-
-  async function hashPassword(password) {
-    if (!window.crypto?.subtle) throw new Error("Secure password hashing is unavailable in this browser.");
-    const salt = window.crypto.getRandomValues(new Uint8Array(16));
-    const key = await window.crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveBits"]);
-    const bits = await window.crypto.subtle.deriveBits({ name: "PBKDF2", salt, iterations: 210000, hash: "SHA-256" }, key, 256);
-    const toHex = (bytes) => Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
-    return { salt: toHex(salt), hash: toHex(new Uint8Array(bits)) };
-  }
-
-  async function verifyPassword(password, saltHex, expectedHash) {
-    if (!window.crypto?.subtle) throw new Error("Secure password hashing is unavailable in this browser.");
-    if (!/^[\da-f]{32}$/i.test(saltHex)) return false;
-    const salt = new Uint8Array(saltHex.match(/.{2}/g).map((byte) => Number.parseInt(byte, 16)));
-    const key = await window.crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveBits"]);
-    const bits = await window.crypto.subtle.deriveBits({ name: "PBKDF2", salt, iterations: 210000, hash: "SHA-256" }, key, 256);
-    const hash = Array.from(new Uint8Array(bits), (byte) => byte.toString(16).padStart(2, "0")).join("");
-    return hash === expectedHash;
+    const form = document.querySelector("#demo-profile-form");
+    if (demoProfile) {
+      form.elements.name.value = demoProfile.name;
+      form.elements.location.value = demoProfile.location;
+      form.elements.instrument.value = demoProfile.instrument;
+      form.elements.genres.value = demoProfile.genres.join(", ");
+      form.elements.skill.value = demoProfile.skill;
+      form.elements.role.value = demoProfile.roles[0];
+      form.elements.lookingFor.value = demoProfile.lookingFor.join(", ");
+      form.elements.artists.value = demoProfile.artists.join(", ");
+      form.elements.bio.value = demoProfile.bio;
+    } else {
+      form.reset();
+    }
+    document.querySelector("#demo-profile-title").textContent = demoProfile ? "Edit your demo profile" : "Create a demo profile";
+    form.querySelector('[type="submit"]').firstChild.textContent = demoProfile ? "Update my demo profile " : "Add my demo profile ";
+    document.querySelector("#demo-profile-dialog").showModal();
   }
 
   function displayList(value) {
     return value.split(",").map((item) => item.trim()).filter(Boolean).join(" · ");
   }
 
-  function saveCurrentAccountConnections() {
-    if (!currentAccount) return true;
-    const accounts = readAccounts();
-    if (!accounts) return false;
-    currentAccount.connections = [...connected];
-    const accountIndex = accounts.findIndex((account) =>
-      account.email?.toLowerCase() === currentAccount.email?.toLowerCase());
-    if (accountIndex === -1) return false;
-    accounts[accountIndex] = currentAccount;
-    try {
-      window.localStorage.setItem(accountStorageKey, JSON.stringify(accounts));
-      return true;
-    } catch (error) {
-      console.error("Could not save Community Chord connections.", error);
-      return false;
-    }
-  }
-
   function renderConnections() {
     const panel = document.querySelector("#profile-connections");
     const list = document.querySelector("#connections-list");
-    if (!currentAccount) {
+    if (!demoProfile) {
       panel.hidden = true;
       list.innerHTML = "";
       return;
     }
+    panel.hidden = false;
     const connections = data.musicians.filter((person) => connected.has(person.id));
     list.innerHTML = connections.length
       ? connections.map((person) => `
@@ -178,37 +74,34 @@
       : '<p class="connections-empty">You have no connections yet.</p>';
   }
 
-  function renderAccount() {
-    const name = currentAccount?.name || "Guest musician";
-    const initials = currentAccount
-      ? currentAccount.name.trim().split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase()
+  function renderDemoProfile() {
+    const name = demoProfile?.name || "Guest musician";
+    const initials = demoProfile
+      ? demoProfile.name.trim().split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase()
       : "G";
     document.querySelector(".header-profile .avatar").textContent = initials;
-    document.querySelector(".header-name").textContent = currentAccount?.name || "Guest";
-    document.querySelector(".header-profile").setAttribute("aria-label", `View ${currentAccount ? `${name}'s` : "guest"} profile`);
-    document.querySelectorAll('[data-account-action="signup"], [data-account-action="login"]')
-      .forEach((button) => { button.hidden = Boolean(currentAccount); });
-    document.querySelector("#logout-button").hidden = !currentAccount;
+    document.querySelector(".header-name").textContent = demoProfile?.name || "Guest";
+    document.querySelector(".header-profile").setAttribute("aria-label", `View ${demoProfile ? `${name}'s demo` : "guest"} profile`);
+    document.querySelector("#header-demo-button").textContent = demoProfile ? "Edit demo profile" : "Create demo profile";
     document.querySelector("#profile-avatar").textContent = initials;
     document.querySelector("#profile-title").textContent = name;
-    document.querySelector("#profile-location").textContent = currentAccount
-      ? "Community musician · Here to make music"
-      : "Sign up to create your profile";
-    document.querySelector("#profile-instruments").textContent = currentAccount
-      ? displayList(currentAccount.instruments)
-      : "Add your instruments when you sign up";
-    document.querySelector("#profile-music").textContent = currentAccount
-      ? displayList(currentAccount.music)
-      : "Add your favorite music when you sign up";
-    document.querySelector("#profile-artists").textContent = currentAccount
-      ? displayList(currentAccount.artists)
-      : "Add your favorite artists when you sign up";
-    document.querySelector("#profile-roles").textContent = currentAccount
-      ? currentAccount.roles.join(" · ")
-      : "Singer, songwriter, musician, and more";
+    document.querySelector("#profile-location").textContent = demoProfile
+      ? `${demoProfile.location || "Community musician"} · Demo profile, not saved`
+      : "Create a demo profile to introduce your sound";
+    document.querySelector("#profile-instruments").textContent = demoProfile
+      ? demoProfile.instrument
+      : "Add your instruments to your demo profile";
+    document.querySelector("#profile-music").textContent = demoProfile
+      ? displayList(demoProfile.genres.join(", "))
+      : "Add your favorite genres to your demo profile";
+    document.querySelector("#profile-artists").textContent = demoProfile
+      ? displayList(demoProfile.artists.join(", ")) || "Add your favorite artists"
+      : "Add your favorite artists to your demo profile";
+    document.querySelector("#profile-roles").textContent = demoProfile
+      ? demoProfile.roles.join(" · ")
+      : "Musician, singer, songwriter, or music lover";
     const profileAction = document.querySelector("#profile-action");
-    profileAction.dataset.accountAction = currentAccount ? "" : "signup";
-    profileAction.textContent = currentAccount ? "Find my bandmates ↗" : "Sign up to create your profile";
+    profileAction.textContent = demoProfile ? "Edit demo profile" : "Create a demo profile";
     renderConnections();
   }
 
@@ -221,6 +114,12 @@
     button.addEventListener("click", () => document.querySelector("#account-dialog").close());
   });
   document.querySelector("#account-dialog").addEventListener("click", (event) => {
+    if (event.target === event.currentTarget) event.currentTarget.close();
+  });
+  document.querySelectorAll("[data-demo-profile-close]").forEach((button) => {
+    button.addEventListener("click", () => document.querySelector("#demo-profile-dialog").close());
+  });
+  document.querySelector("#demo-profile-dialog").addEventListener("click", (event) => {
     if (event.target === event.currentTarget) event.currentTarget.close();
   });
   const membershipDialog = document.querySelector("#membership-dialog");
@@ -242,8 +141,11 @@
   }
 
   function matchScore(musician) {
-    const sharedGenres = musician.genres.filter((genre) => data.currentUser.genres.includes(genre)).length;
-    const complementary = data.currentUser.lookingFor.some((role) => {
+    const currentProfile = demoProfile
+      ? { genres: demoProfile.genres, lookingFor: demoProfile.lookingFor, instruments: [demoProfile.instrument] }
+      : data.currentUser;
+    const sharedGenres = musician.genres.filter((genre) => currentProfile.genres.includes(genre)).length;
+    const complementary = currentProfile.lookingFor.some((role) => {
       const wanted = role.toLowerCase();
       const instrument = musician.instrument.toLowerCase();
       return wanted === instrument || (wanted === "singer" && instrument === "vocals");
@@ -252,7 +154,9 @@
   }
 
   function renderMatches() {
-    const ranked = [...data.musicians].sort((a, b) => matchScore(b) - matchScore(a) || a.name.localeCompare(b.name));
+    const ranked = data.musicians
+      .filter((person) => person.id !== demoProfile?.id)
+      .sort((a, b) => matchScore(b) - matchScore(a) || a.name.localeCompare(b.name));
     const picks = Array.from({ length: 3 }, (_, index) => ranked[(index + matchOffset) % ranked.length]);
     document.querySelector("#match-list").innerHTML = picks.map((person, index) => `
       <article class="match-card">
@@ -261,7 +165,7 @@
           ${initialsAvatar(person.initials, person.color, "match-avatar")}
           <div><h3>${escapeHtml(person.name)}</h3><p>${escapeHtml(person.instrument)} <span>·</span> ${escapeHtml(person.location)}</p></div>
         </div>
-        <p class="match-reason">${escapeHtml(person.instrument)} + ${escapeHtml(data.currentUser.instruments[0])} could be a good sound. Into ${escapeHtml(person.genres.slice(0, 2).join(" and "))}.</p>
+        <p class="match-reason">${escapeHtml(person.instrument)} + ${escapeHtml(demoProfile?.instrument || data.currentUser.instruments[0])} could be a good sound. Into ${escapeHtml(person.genres.slice(0, 2).join(" and "))}.</p>
         <button class="button button-small ${connected.has(person.id) ? "button-connected" : "button-outline"}" type="button" data-connect="${escapeHtml(person.id)}">${connected.has(person.id) ? "Connected ✓" : "Say hello ↗"}</button>
       </article>
     `).join("");
@@ -274,10 +178,80 @@
       <p class="musician-role">${escapeHtml(person.instrument)} <span>·</span> ${escapeHtml(person.location)}</p>
       <p class="musician-bio">${escapeHtml(person.bio)}</p>
       <div class="tag-row">${person.genres.map((genre) => `<span class="tag">${escapeHtml(genre)}</span>`).join("")}</div>
-      <div class="musician-footer"><span>Looking for <strong>${escapeHtml(person.lookingFor.slice(0, 2).join(", "))}</strong></span>
+      <div class="musician-footer"><button class="view-profile-button" type="button" data-view-profile="${escapeHtml(person.id)}">View profile</button><span>Looking for <strong>${escapeHtml(person.lookingFor.slice(0, 2).join(", "))}</strong></span>
       <button class="icon-button ${connected.has(person.id) ? "is-connected" : ""}" type="button" data-connect="${escapeHtml(person.id)}" aria-label="${connected.has(person.id) ? "Connected with" : "Connect with"} ${escapeHtml(person.name)}">${connected.has(person.id) ? "✓" : "↗"}</button></div></div>
     </article>`;
   }
+
+  function renderMusicianProfile(id) {
+    const person = data.musicians.find((musician) => musician.id === id);
+    if (!person) return;
+    document.querySelector("#musician-dialog").innerHTML = `
+      <div class="account-dialog-heading">
+        <div><p class="eyebrow">MUSICIAN PROFILE</p><h2 id="musician-dialog-title">${escapeHtml(person.name)}</h2></div>
+        <button class="account-close" type="button" aria-label="Close musician profile" data-musician-close>×</button>
+      </div>
+      <p class="account-dialog-description">${escapeHtml(person.instrument)} · ${escapeHtml(person.location)} · ${escapeHtml(person.skill)}</p>
+      <p>${escapeHtml(person.bio)}</p>
+      <div class="profile-view-details">
+        <p><strong>Genres</strong><br>${escapeHtml(person.genres.join(" · "))}</p>
+        <p><strong>Favorite artists</strong><br>${escapeHtml(person.artists.join(" · "))}</p>
+        <p><strong>Looking to meet</strong><br>${escapeHtml(person.lookingFor.join(" · "))}</p>
+      </div>
+      <button class="button ${connected.has(person.id) ? "button-connected" : "button-primary"} profile-connect-button" type="button" data-connect="${escapeHtml(person.id)}">${connected.has(person.id) ? "Connected ✓" : "Connect with " + escapeHtml(person.name)}</button>`;
+    document.querySelector("#musician-dialog").showModal();
+  }
+
+  document.querySelector("#musician-dialog").addEventListener("click", (event) => {
+    if (event.target === event.currentTarget || event.target.closest("[data-musician-close]")) {
+      event.currentTarget.close();
+    }
+  });
+
+  document.querySelector("#demo-profile-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const splitList = (value) => value.split(",").map((item) => item.trim()).filter(Boolean);
+    const name = form.elements.name.value.trim();
+    const instrument = form.elements.instrument.value.trim();
+    const genres = splitList(form.elements.genres.value);
+    if (!name || !instrument) {
+      showToast("Add your name and an instrument or music role.");
+      form.elements[!name ? "name" : "instrument"].focus();
+      return;
+    }
+    if (!genres.length) {
+      showToast("Add at least one genre to your demo profile.");
+      form.elements.genres.focus();
+      return;
+    }
+
+    demoProfile = {
+      id: "demo-profile",
+      name,
+      location: form.elements.location.value.trim(),
+      instrument,
+      genres,
+      skill: form.elements.skill.value,
+      roles: [form.elements.role.value],
+      lookingFor: splitList(form.elements.lookingFor.value),
+      artists: splitList(form.elements.artists.value),
+      bio: form.elements.bio.value.trim() || "Open to meeting local musicians and making something together.",
+      initials: name.split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase(),
+      color: "lilac"
+    };
+    const existingIndex = data.musicians.findIndex((person) => person.id === demoProfile.id);
+    if (existingIndex === -1) data.musicians.push(demoProfile);
+    else data.musicians[existingIndex] = demoProfile;
+
+    document.querySelector("#demo-profile-dialog").close();
+    fillFilters();
+    renderDemoProfile();
+    renderMatches();
+    renderMusicians();
+    renderGrowthStats();
+    showToast(existingIndex === -1 ? "Your demo profile is in the community!" : "Your demo profile has been updated.");
+  });
 
   function renderMusicians() {
     const query = document.querySelector("#musician-search").value.trim().toLowerCase();
@@ -308,8 +282,21 @@
   function fillFilters() {
     const instruments = [...new Set(data.musicians.map((person) => person.instrument))].sort();
     const genres = [...new Set(data.musicians.flatMap((person) => person.genres))].sort();
-    document.querySelector("#instrument-filter").insertAdjacentHTML("beforeend", instruments.map((item) => `<option>${escapeHtml(item)}</option>`).join(""));
-    document.querySelector("#genre-filter").insertAdjacentHTML("beforeend", genres.map((item) => `<option>${escapeHtml(item)}</option>`).join(""));
+    const instrumentFilter = document.querySelector("#instrument-filter");
+    const genreFilter = document.querySelector("#genre-filter");
+    const selectedInstrument = instrumentFilter.value;
+    const selectedGenre = genreFilter.value;
+    instrumentFilter.innerHTML = '<option value="">All instruments</option>' + instruments.map((item) => `<option>${escapeHtml(item)}</option>`).join("");
+    genreFilter.innerHTML = '<option value="">All genres</option>' + genres.map((item) => `<option>${escapeHtml(item)}</option>`).join("");
+    instrumentFilter.value = selectedInstrument;
+    genreFilter.value = selectedGenre;
+  }
+
+  function renderGrowthStats() {
+    document.querySelector("#growth-musicians").textContent = data.musicians.length;
+    document.querySelector("#growth-collaborations").textContent = data.growth.collaborations;
+    document.querySelector("#growth-communities").textContent = data.communities.length;
+    document.querySelector("#growth-events").textContent = data.events.length;
   }
 
   function renderCommunities() {
@@ -385,10 +372,9 @@
   });
 
   document.addEventListener("click", (event) => {
-    if (event.target.closest("#profile-action") && currentAccount) {
-      renderConnections();
-      document.querySelector("#profile-connections").hidden = false;
-      document.querySelector("#profile-connections").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    const viewProfileButton = event.target.closest("[data-view-profile]");
+    if (viewProfileButton) {
+      renderMusicianProfile(viewProfileButton.dataset.viewProfile);
       return;
     }
 
@@ -396,17 +382,21 @@
     if (connectButton) {
       const id = connectButton.dataset.connect;
       const person = data.musicians.find((item) => item.id === id);
+      if (!person || id === demoProfile?.id) return;
       if (connected.has(id)) connected.delete(id);
       else connected.add(id);
-      const connectionsSaved = saveCurrentAccountConnections();
+      const profileConnectButton = document.querySelector(`#musician-dialog [data-connect="${id}"]`);
+      if (profileConnectButton) {
+        profileConnectButton.classList.toggle("button-connected", connected.has(id));
+        profileConnectButton.classList.toggle("button-primary", !connected.has(id));
+        profileConnectButton.textContent = connected.has(id) ? "Connected ✓" : `Connect with ${person.name}`;
+      }
       renderMatches();
       renderMusicians();
       renderConnections();
-      showToast(!connectionsSaved
-        ? "This change could not be saved in browser storage."
-        : connected.has(id)
-          ? `You’re connected with ${person.name}!`
-          : `Connection with ${person.name} removed.`);
+      showToast(connected.has(id)
+        ? `You’re connected with ${person.name}!`
+        : `Connection with ${person.name} removed.`);
       return;
     }
 
@@ -437,7 +427,7 @@
     const input = document.querySelector("#idea-input");
     const text = input.value.trim();
     if (!text) return;
-    data.ideas.unshift({ author: currentAccount?.name || "Guest musician", initials: currentAccount ? currentAccount.name[0].toUpperCase() : "G", color: "lilac", text });
+    data.ideas.unshift({ author: demoProfile?.name || "Guest musician", initials: demoProfile?.initials || "G", color: "lilac", text });
     renderIdeas();
     input.value = "";
     showToast("Your idea is out there. Let the collaboration begin!");
@@ -449,5 +439,6 @@
   renderCommunities();
   renderEvents();
   renderIdeas();
-  renderAccount();
+  renderGrowthStats();
+  renderDemoProfile();
 })();
