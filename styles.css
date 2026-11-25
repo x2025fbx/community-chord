@@ -34,6 +34,9 @@ button { color: inherit; }
 .nav-link:hover, .nav-link.is-active { color: var(--text); }
 .nav-link.is-active { position: relative; }
 .nav-link.is-active::after { content: ""; height: 2px; position: absolute; left: 0; right: 0; bottom: -28px; background: var(--purple); border-radius: 2px; }
+.header-membership { min-height: 36px; padding: 0 12px; font-size: 12px; white-space: nowrap; }
+.header-account-button { min-height: 36px; padding: 0 12px; font-size: 12px; white-space: nowrap; }
+.header-account-button[hidden] { display: none; }
 .header-profile { display: flex; align-items: center; gap: 9px; font-size: 13px; }
 .header-name { color: #e9e5ef; }
 .avatar { width: 44px; height: 44px; border-radius: 50%; display: inline-grid; flex: 0 0 auto; place-items: center; color: white; font-family: var(--font-display); font-size: 14px; font-weight: 700; border: 1px solid rgba(255,255,255,.13); }
@@ -241,6 +244,7 @@ h1, h2, h3 { font-family: var(--font-display); }
 .account-dialog-heading h2 { margin: 0; font-size: 24px; letter-spacing: -.7px; }
 .account-dialog-description { margin: 8px 0 17px; color: var(--muted); font-size: 12px; }
 .account-close { width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-raised); color: var(--text); font-size: 23px; line-height: 1; cursor: pointer; }
+.account-demo-note { margin: 16px 0 0; color: #898395; font-size: 10px; line-height: 1.5; }
 .profile-view-details { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 18px; margin: 18px 0; }
 .profile-view-details p { margin: 0; color: #aaa4b4; font-size: 12px; line-height: 1.7; }
 .profile-view-details strong { color: #d4c2ff; font-size: 10px; }
@@ -256,6 +260,7 @@ h1, h2, h3 { font-family: var(--font-display); }
   .site-header { padding: 0 24px; gap: 18px; }
   .main-nav { gap: 16px; }
   .header-name { display: none; }
+  .header-account-button, .header-membership { padding: 0 9px; }
   .hero { gap: 35px; }
   .musician-grid { grid-template-columns: repeat(2, 1fr); }
   .profile-activity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

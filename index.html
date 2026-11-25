@@ -23,6 +23,9 @@
         <a class="nav-link" id="communities-nav" href="#communities">Communities</a>
         <a class="nav-link" id="events-nav" href="#events">Events</a>
         <a class="nav-link" href="#chats">Chats</a>
+        <button class="button button-primary header-membership" id="membership-button" type="button">Membership</button>
+        <button class="button button-primary header-account-button" id="header-signup-button" type="button" data-account-action="signup">Sign up</button>
+        <button class="button button-outline header-account-button" type="button" data-account-action="login">Log in</button>
       </nav>
     </header>
 
@@ -161,8 +164,31 @@
     <footer class="site-footer">
       <a class="brand footer-brand" href="#home"><span class="brand-mark" aria-hidden="true">♫</span><span>community<span class="brand-light">chord</span></span></a>
       <p>Made for the love of making music.</p>
-      <span class="footer-note">Made for the Halifax music community</span>
+      <span class="footer-note">Student prototype · No real accounts or payments</span>
     </footer>
+    <dialog class="account-dialog" id="account-dialog" aria-labelledby="account-dialog-title">
+      <div class="account-dialog-heading">
+        <div>
+          <p class="eyebrow">COMMUNITY CHORD</p>
+          <h2 id="account-dialog-title">Account unavailable</h2>
+        </div>
+        <button class="account-close" type="button" aria-label="Close dialog" data-dialog-close>×</button>
+      </div>
+      <p class="account-dialog-description" id="account-dialog-description">Real accounts are not available.</p>
+      <button class="button button-primary" type="button" data-dialog-close>Got it</button>
+    </dialog>
+    <dialog class="account-dialog membership-dialog" id="membership-dialog" aria-labelledby="membership-title">
+      <div class="account-dialog-heading">
+        <div>
+          <p class="eyebrow">COMMUNITY CHORD</p>
+          <h2 id="membership-title">Membership</h2>
+        </div>
+        <button class="account-close" id="membership-close" type="button" aria-label="Close membership notice">×</button>
+      </div>
+      <p class="account-dialog-description">This is a student prototype. You cannot view or buy a membership.</p>
+      <p class="account-demo-note">Membership plans and purchasing are unavailable. No payment details are collected and no charge will be made.</p>
+      <button class="button button-primary" id="membership-purchase" type="button">Got it</button>
+    </dialog>
     <dialog class="account-dialog musician-profile-dialog" id="musician-dialog" aria-labelledby="musician-dialog-title"></dialog>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </body>

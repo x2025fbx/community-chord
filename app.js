@@ -26,6 +26,36 @@
     showToast.timeout = window.setTimeout(() => toast.classList.remove("is-visible"), 2600);
   }
 
+  document.querySelectorAll('[data-account-action="signup"], [data-account-action="login"]').forEach((button) => {
+    button.addEventListener("click", () => {
+      const dialog = document.querySelector("#account-dialog");
+      const title = document.querySelector("#account-dialog-title");
+      const description = document.querySelector("#account-dialog-description");
+      if (button.dataset.accountAction === "signup") {
+        title.textContent = "Sign up unavailable";
+        description.textContent = "This website does not offer account registration.";
+      } else {
+        title.textContent = "Log in unavailable";
+        description.textContent = "This website does not offer account login.";
+      }
+      dialog.showModal();
+    });
+  });
+  document.querySelectorAll("[data-dialog-close]").forEach((button) => {
+    button.addEventListener("click", () => document.querySelector("#account-dialog").close());
+  });
+  document.querySelector("#account-dialog").addEventListener("click", (event) => {
+    if (event.target === event.currentTarget) event.currentTarget.close();
+  });
+
+  const membershipDialog = document.querySelector("#membership-dialog");
+  document.querySelector("#membership-button").addEventListener("click", () => membershipDialog.showModal());
+  document.querySelector("#membership-close").addEventListener("click", () => membershipDialog.close());
+  document.querySelector("#membership-purchase").addEventListener("click", () => membershipDialog.close());
+  membershipDialog.addEventListener("click", (event) => {
+    if (event.target === event.currentTarget) event.currentTarget.close();
+  });
+
   function displayList(value) {
     return value.split(",").map((item) => item.trim()).filter(Boolean).join(" · ");
   }
