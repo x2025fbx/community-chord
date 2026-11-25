@@ -28,28 +28,14 @@
   }
 
   function showAccountDialog(mode) {
-    if (mode === "login") {
-      document.querySelector("#account-dialog").showModal();
-      return;
-    }
-
-    const form = document.querySelector("#demo-profile-form");
-    if (demoProfile) {
-      form.elements.name.value = demoProfile.name;
-      form.elements.location.value = demoProfile.location;
-      form.elements.instrument.value = demoProfile.instrument;
-      form.elements.genres.value = demoProfile.genres.join(", ");
-      form.elements.skill.value = demoProfile.skill;
-      form.elements.role.value = demoProfile.roles[0];
-      form.elements.lookingFor.value = demoProfile.lookingFor.join(", ");
-      form.elements.artists.value = demoProfile.artists.join(", ");
-      form.elements.bio.value = demoProfile.bio;
-    } else {
-      form.reset();
-    }
-    document.querySelector("#demo-profile-title").textContent = demoProfile ? "Edit your demo profile" : "Create a demo profile";
-    form.querySelector('[type="submit"]').firstChild.textContent = demoProfile ? "Update my demo profile " : "Add my demo profile ";
-    document.querySelector("#demo-profile-dialog").showModal();
+    const isSignup = mode === "signup";
+    document.querySelector("#account-dialog-title").textContent = isSignup
+      ? "Sign up unavailable"
+      : "Log in unavailable";
+    document.querySelector("#account-dialog-description").textContent = isSignup
+      ? "This is a student prototype. Real account creation is not available."
+      : "This is a student prototype. Real login is not available.";
+    document.querySelector("#account-dialog").showModal();
   }
 
   function displayList(value) {
@@ -120,21 +106,19 @@
     document.querySelector("#profile-title").textContent = name;
     document.querySelector("#profile-location").textContent = demoProfile
       ? `${demoProfile.location || "Community musician"} · Demo profile, not saved`
-      : "Create a demo profile to introduce your sound";
+      : "Your music profile will appear here";
     document.querySelector("#profile-instruments").textContent = demoProfile
       ? demoProfile.instrument
-      : "Add your instruments to your demo profile";
+      : "Your instruments will appear here";
     document.querySelector("#profile-music").textContent = demoProfile
       ? displayList(demoProfile.genres.join(", "))
-      : "Add your favorite genres to your demo profile";
+      : "Your favorite genres will appear here";
     document.querySelector("#profile-artists").textContent = demoProfile
       ? displayList(demoProfile.artists.join(", ")) || "Add your favorite artists"
-      : "Add your favorite artists to your demo profile";
+      : "Your favorite artists will appear here";
     document.querySelector("#profile-roles").textContent = demoProfile
       ? demoProfile.roles.join(" · ")
       : "Musician, singer, songwriter, or music lover";
-    const profileAction = document.querySelector("#profile-action");
-    profileAction.textContent = demoProfile ? "Edit demo profile" : "Create a demo profile";
     renderConnections();
   }
 
