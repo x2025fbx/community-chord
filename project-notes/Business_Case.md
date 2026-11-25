@@ -29,7 +29,7 @@ As more people join and the network grows, the extra value come from having more
 
 To get people using the app in the beginning, we would connect with the local universities and ask them to help promote it through campus events, posters and the university Social media pages. We would also promote it on social media pages such as Instagram, Facebook, TikTok because this is where most of the music lovers go to now to connect but its not a dedicated space for music. These would help attract our first users and starts building that music community.
 
-The prototype shows network effect by having a displae showing the amount of music lover whp use the app, the amount of collaboraitons, the amount of communties and amount of events.
+The prototype demonstrates this network effect with live counters showing how many music lovers are using the app, along with the number of collaborations, communities and events. These counts update as the community grows, making the activity and opportunities on the platform visible to users.
 
 ## 4. Can it be copied? (the moat question)
 
