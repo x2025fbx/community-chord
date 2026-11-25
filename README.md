@@ -14,6 +14,7 @@ Explore the prototype at **[x2025fbx.github.io/community-chord](https://x2025fbx
 - Join music communities, RSVP to events, and share collaboration ideas.
 - See connected bandmates, signed-up events, and joined communities in your demo profile.
 - See clearly labeled illustrative community-growth statistics and sample community activity.
+- Watch the fictional demo totals tick upward periodically; they reset when the page is refreshed.
 - Expand the musician, communities, and events previews to see all available listings, then collapse them with “View less.”
 - View the membership notice; no real payments are processed.
 - Use a responsive interface designed for desktop and mobile screens.

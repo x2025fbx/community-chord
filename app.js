@@ -323,6 +323,20 @@
     document.querySelector("#growth-events").textContent = formatCount(data.growth.events);
   }
 
+  function updateDemoStats() {
+    const increments = {
+      musicians: Math.floor(Math.random() * 3) + 1,
+      collaborations: Math.floor(Math.random() * 3) + 1,
+      communities: 1,
+      events: 1
+    };
+    const keys = Object.keys(increments);
+    const key = keys[Math.floor(Math.random() * keys.length)];
+    data.growth[key] += increments[key];
+    renderGrowthStats();
+    window.setTimeout(updateDemoStats, 12000 + Math.random() * 18000);
+  }
+
   function renderCommunities() {
     const communities = communitiesExpanded ? data.communities : data.communities.slice(0, listPreviewLimit);
     document.querySelector("#community-list").innerHTML = communities.map((community) => `
@@ -467,4 +481,5 @@
   renderIdeas();
   renderGrowthStats();
   renderDemoProfile();
+  window.setTimeout(updateDemoStats, 12000 + Math.random() * 18000);
 })();
