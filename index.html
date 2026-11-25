@@ -22,6 +22,7 @@
         <a class="nav-link" href="#discover">Discover Musicians</a>
         <a class="nav-link" id="communities-nav" href="#communities">Communities</a>
         <a class="nav-link" id="events-nav" href="#events">Events</a>
+        <a class="nav-link" href="#chats">Chats</a>
         <a class="nav-link" href="#profile">My Profile</a>
         <button class="button button-primary header-membership" id="membership-button" type="button">Membership</button>
         <button class="button button-primary header-account-button" id="header-signup-button" type="button" data-account-action="signup">Sign up</button>
@@ -159,6 +160,22 @@
             <button type="submit" class="button button-primary">Share idea <span aria-hidden="true">↗</span></button>
           </form>
           <div class="idea-list" id="idea-list" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="section-block chats-section" id="chats" aria-labelledby="chats-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">KEEP THE CONVERSATION GOING</p>
+            <h2 id="chats-title">Your <span>chats.</span></h2>
+            <p class="section-subtitle">Messages with musicians you have connected with.</p>
+          </div>
+        </div>
+        <div class="chat-layout">
+          <div class="chat-sidebar" id="chat-list" aria-label="Chat conversations"></div>
+          <div class="chat-window" id="chat-window">
+            <p class="chat-empty">Connect with a musician to start a chat.</p>
+          </div>
         </div>
       </section>
 

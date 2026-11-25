@@ -4,12 +4,15 @@
   const joined = new Set();
   const rsvps = new Set();
   const listPreviewLimit = 4;
+  const workingOnPreviewLimit = 5;
   const musicianPreviewLimit = 12;
   let demoProfile = null;
   let matchOffset = 0;
   let musiciansExpanded = false;
   let communitiesExpanded = false;
   let eventsExpanded = false;
+  let activeChatId = null;
+  const chatMessages = new Map();
 
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -100,6 +103,7 @@
         </article>
       `).join("")
       : '<p class="connections-empty">No communities joined yet.</p>';
+    renderChats();
   }
 
   function renderDemoProfile() {
@@ -360,8 +364,43 @@
   }
 
   function renderIdeas() {
-    document.querySelector("#idea-list").innerHTML = data.ideas.map((idea) => `
+    document.querySelector("#idea-list").innerHTML = data.ideas.slice(0, workingOnPreviewLimit).map((idea) => `
       <article class="idea-item">${initialsAvatar(idea.initials, idea.color, "idea-avatar")}<div><span class="idea-author">${escapeHtml(idea.author)} <span>· ${escapeHtml(idea.time || "just now")}</span></span><p>${escapeHtml(idea.text)}</p></div></article>`).join("");
+  }
+
+  function renderChats() {
+    const connectedPeople = data.musicians.filter((person) => connected.has(person.id));
+    const chatList = document.querySelector("#chat-list");
+    const chatWindow = document.querySelector("#chat-window");
+
+    if (!connectedPeople.length) {
+      chatList.innerHTML = '<p class="chat-empty">No conversations yet.</p>';
+      chatWindow.innerHTML = '<p class="chat-empty">Connect with a musician to start a chat.</p>';
+      activeChatId = null;
+      return;
+    }
+
+    if (!activeChatId || !connected.has(activeChatId)) activeChatId = connectedPeople[0].id;
+    chatList.innerHTML = connectedPeople.map((person) => `
+      <button class="chat-person ${activeChatId === person.id ? "is-active" : ""}" type="button" data-open-chat="${escapeHtml(person.id)}">
+        ${initialsAvatar(person.initials, person.color)}
+        <span><strong>${escapeHtml(person.name)}</strong><small>${escapeHtml(person.instrument)} · ${escapeHtml(person.location)}</small></span>
+      </button>
+    `).join("");
+
+    const person = connectedPeople.find((item) => item.id === activeChatId);
+    const messages = chatMessages.get(person.id) || [];
+    chatWindow.innerHTML = `
+      <div class="chat-header">${initialsAvatar(person.initials, person.color)}<div><strong>${escapeHtml(person.name)}</strong><small>Demo conversation</small></div></div>
+      <div class="chat-messages" id="chat-messages" aria-live="polite">
+        ${messages.length ? messages.map((message) => `<p class="chat-message ${message.sent ? "is-sent" : ""}">${escapeHtml(message.text)}</p>`).join("") : '<p class="chat-empty">Say hello to start the conversation.</p>'}
+      </div>
+      <form class="chat-form" id="chat-form">
+        <label class="sr-only" for="chat-input">Message ${escapeHtml(person.name)}</label>
+        <input id="chat-input" type="text" maxlength="240" placeholder="Write a message..." required>
+        <button class="button button-primary" type="submit">Send</button>
+      </form>
+    `;
   }
 
   function updateExpansionControl(button, expanded, collapsedLabel) {
@@ -410,6 +449,14 @@
   });
 
   document.addEventListener("click", (event) => {
+    const openChatButton = event.target.closest("[data-open-chat]");
+    if (openChatButton) {
+      activeChatId = openChatButton.dataset.openChat;
+      renderChats();
+      document.querySelector("#chats").scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+
     const viewProfileButton = event.target.closest("[data-view-profile]");
     if (viewProfileButton) {
       renderMusicianProfile(viewProfileButton.dataset.viewProfile);
@@ -471,6 +518,19 @@
     renderIdeas();
     input.value = "";
     showToast("Your idea is out there. Let the collaboration begin!");
+  });
+
+  document.addEventListener("submit", (event) => {
+    if (event.target.id !== "chat-form") return;
+    event.preventDefault();
+    if (!activeChatId) return;
+    const input = event.target.querySelector("#chat-input");
+    const text = input.value.trim();
+    if (!text) return;
+    const messages = chatMessages.get(activeChatId) || [];
+    messages.push({ text, sent: true });
+    chatMessages.set(activeChatId, messages);
+    renderChats();
   });
 
   fillFilters();
