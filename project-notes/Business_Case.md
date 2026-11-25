@@ -56,3 +56,6 @@ Using cloud services does have risks. If the cloud provider experiences poblems,
 There are several risks and ethical issues that could come with the webiste. One major risk is users personal information being exposed if the website was hacked. Since users would provide personal information and private messages, I would try to have a strong security to protect their data.
 
 Another concern is making sure users feel safe when using the platform. Some people could use the website to send unwanted messages or bother other users. I would include features that allow users to block and report others, and have moderators review complaints and take action when needed.
+
+AI Line
+"AI use: I used Chat GPT to assist me with suggestions with what to say to copilot when I couldnt change the website as I wanted to aswell as suggestions on the services to use and what they meant, and risks when launching the website All actuall reasoning are my own"

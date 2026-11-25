@@ -6,7 +6,6 @@
   const listPreviewLimit = 4;
   const workingOnPreviewLimit = 5;
   const musicianPreviewLimit = 12;
-  let demoProfile = null;
   let matchOffset = 0;
   let musiciansExpanded = false;
   let communitiesExpanded = false;
@@ -27,156 +26,16 @@
     showToast.timeout = window.setTimeout(() => toast.classList.remove("is-visible"), 2600);
   }
 
-  function showAccountDialog(mode) {
-    if (mode === "login") {
-      document.querySelector("#account-dialog").showModal();
-      return;
-    }
-
-    const form = document.querySelector("#demo-profile-form");
-    if (demoProfile) {
-      form.elements.name.value = demoProfile.name;
-      form.elements.location.value = demoProfile.location;
-      form.elements.instrument.value = demoProfile.instrument;
-      form.elements.genres.value = demoProfile.genres.join(", ");
-      form.elements.skill.value = demoProfile.skill;
-      form.elements.role.value = demoProfile.roles[0];
-      form.elements.lookingFor.value = demoProfile.lookingFor.join(", ");
-      form.elements.artists.value = demoProfile.artists.join(", ");
-      form.elements.bio.value = demoProfile.bio;
-    } else {
-      form.reset();
-    }
-    document.querySelector("#demo-profile-title").textContent = demoProfile ? "Edit your demo profile" : "Create a demo profile";
-    form.querySelector('[type="submit"]').firstChild.textContent = demoProfile ? "Update my demo profile " : "Add my demo profile ";
-    document.querySelector("#demo-profile-dialog").showModal();
-  }
-
   function displayList(value) {
     return value.split(",").map((item) => item.trim()).filter(Boolean).join(" · ");
   }
-
-  function renderConnections() {
-    const panel = document.querySelector("#profile-connections");
-    const list = document.querySelector("#connections-list");
-    const eventsList = document.querySelector("#signed-up-events-list");
-    const communitiesList = document.querySelector("#joined-communities-list");
-    renderChats();
-    if (!demoProfile) {
-      panel.hidden = true;
-      list.innerHTML = "";
-      eventsList.innerHTML = "";
-      communitiesList.innerHTML = "";
-      return;
-    }
-    panel.hidden = false;
-    const connections = data.musicians.filter((person) => connected.has(person.id));
-    const signedUpEvents = data.events.filter((item) => rsvps.has(item.id));
-    const joinedCommunities = data.communities.filter((item) => joined.has(item.id));
-    list.innerHTML = connections.length
-      ? connections.map((person) => `
-        <article class="connection-card">
-          ${initialsAvatar(person.initials, person.color)}
-          <div class="connection-card-copy">
-            <h4>${escapeHtml(person.name)}</h4>
-            <p>${escapeHtml(person.instrument)} · ${escapeHtml(person.location)}</p>
-          </div>
-          <button class="connection-chat-button" type="button" data-open-chat="${escapeHtml(person.id)}">Chat</button>
-        </article>
-      `).join("")
-      : '<p class="connections-empty">No connected bandmates yet.</p>';
-    eventsList.innerHTML = signedUpEvents.length
-      ? signedUpEvents.map((item) => `
-        <article class="connection-card">
-          <div class="connection-card-copy">
-            <h4>${escapeHtml(item.name)}</h4>
-            <p>${escapeHtml(item.day)} ${escapeHtml(item.month)} · ${escapeHtml(item.venue)}</p>
-          </div>
-        </article>
-      `).join("")
-      : '<p class="connections-empty">No event sign-ups yet.</p>';
-    communitiesList.innerHTML = joinedCommunities.length
-      ? joinedCommunities.map((item) => `
-        <article class="connection-card">
-          <div class="connection-card-copy">
-            <h4>${escapeHtml(item.name)}</h4>
-            <p>${escapeHtml(item.category)}</p>
-          </div>
-        </article>
-      `).join("")
-      : '<p class="connections-empty">No communities joined yet.</p>';
-    renderChats();
-  }
-
-  function renderDemoProfile() {
-    const name = demoProfile?.name || "Guest musician";
-    const initials = demoProfile
-      ? demoProfile.name.trim().split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase()
-      : "G";
-    document.querySelector(".header-profile .avatar").textContent = initials;
-    document.querySelector(".header-name").textContent = demoProfile?.name || "Guest";
-    document.querySelector(".header-profile").setAttribute("aria-label", `View ${demoProfile ? `${name}'s demo` : "guest"} profile`);
-    document.querySelector("#profile-avatar").textContent = initials;
-    document.querySelector("#profile-title").textContent = name;
-    document.querySelector("#profile-location").textContent = demoProfile
-      ? `${demoProfile.location || "Community musician"} · Demo profile, not saved`
-      : "Create a demo profile to introduce your sound";
-    document.querySelector("#profile-instruments").textContent = demoProfile
-      ? demoProfile.instrument
-      : "Add your instruments to your demo profile";
-    document.querySelector("#profile-music").textContent = demoProfile
-      ? displayList(demoProfile.genres.join(", "))
-      : "Add your favorite genres to your demo profile";
-    document.querySelector("#profile-artists").textContent = demoProfile
-      ? displayList(demoProfile.artists.join(", ")) || "Add your favorite artists"
-      : "Add your favorite artists to your demo profile";
-    document.querySelector("#profile-roles").textContent = demoProfile
-      ? demoProfile.roles.join(" · ")
-      : "Musician, singer, songwriter, or music lover";
-    const profileAction = document.querySelector("#profile-action");
-    profileAction.textContent = demoProfile ? "Edit demo profile" : "Create a demo profile";
-    renderConnections();
-  }
-
-  document.querySelectorAll('[data-account-action="signup"], [data-account-action="login"]').forEach((button) => {
-    button.addEventListener("click", () => {
-      showAccountDialog(button.dataset.accountAction);
-    });
-  });
-  document.querySelectorAll("[data-dialog-close]").forEach((button) => {
-    button.addEventListener("click", () => document.querySelector("#account-dialog").close());
-  });
-  document.querySelector("#account-dialog").addEventListener("click", (event) => {
-    if (event.target === event.currentTarget) event.currentTarget.close();
-  });
-  document.querySelectorAll("[data-demo-profile-close]").forEach((button) => {
-    button.addEventListener("click", () => document.querySelector("#demo-profile-dialog").close());
-  });
-  document.querySelector("#demo-profile-dialog").addEventListener("click", (event) => {
-    if (event.target === event.currentTarget) event.currentTarget.close();
-  });
-  const membershipDialog = document.querySelector("#membership-dialog");
-  document.querySelector("#membership-button").addEventListener("click", () => {
-    membershipDialog.showModal();
-  });
-  document.querySelector("#membership-close").addEventListener("click", () => {
-    membershipDialog.close();
-  });
-  membershipDialog.addEventListener("click", (event) => {
-    if (event.target === event.currentTarget) event.currentTarget.close();
-  });
-  document.querySelector("#membership-purchase").addEventListener("click", () => {
-    membershipDialog.close();
-  });
 
   function initialsAvatar(initials, color, extraClass = "") {
     return `<span class="avatar avatar-${escapeHtml(color)} ${extraClass}" aria-hidden="true">${escapeHtml(initials)}</span>`;
   }
 
   function matchScore(musician) {
-    const currentProfile = demoProfile
-      ? { genres: demoProfile.genres, lookingFor: demoProfile.lookingFor, instruments: [demoProfile.instrument] }
-      : data.currentUser;
+    const currentProfile = data.currentUser;
     const sharedGenres = musician.genres.filter((genre) => currentProfile.genres.includes(genre)).length;
     const complementary = currentProfile.lookingFor.some((role) => {
       const wanted = role.toLowerCase();
@@ -188,7 +47,7 @@
 
   function renderMatches() {
     const ranked = data.musicians
-      .filter((person) => person.id !== demoProfile?.id)
+      .filter((person) => true)
       .sort((a, b) => matchScore(b) - matchScore(a) || a.name.localeCompare(b.name));
     const picks = Array.from({ length: 6 }, (_, index) => ranked[(index + matchOffset) % ranked.length]);
     document.querySelector("#match-list").innerHTML = picks.map((person, index) => `
@@ -198,7 +57,7 @@
           ${initialsAvatar(person.initials, person.color, "match-avatar")}
           <div><h3>${escapeHtml(person.name)}</h3><p>${escapeHtml(person.instrument)} <span>·</span> ${escapeHtml(person.location)}</p></div>
         </div>
-        <p class="match-reason">${escapeHtml(person.instrument)} + ${escapeHtml(demoProfile?.instrument || data.currentUser.instruments[0])} could be a good sound. Into ${escapeHtml(person.genres.slice(0, 2).join(" and "))}.</p>
+        <p class="match-reason">${escapeHtml(person.instrument)} + ${escapeHtml(data.currentUser.instruments[0])} could be a good sound. Into ${escapeHtml(person.genres.slice(0, 2).join(" and "))}.</p>
         <button class="button button-small ${connected.has(person.id) ? "button-connected" : "button-outline"}" type="button" data-connect="${escapeHtml(person.id)}">${connected.has(person.id) ? "Connected ✓" : "Say hello ↗"}</button>
       </article>
     `).join("");
@@ -241,51 +100,6 @@
     }
   });
 
-  document.querySelector("#demo-profile-form").addEventListener("submit", (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const splitList = (value) => value.split(",").map((item) => item.trim()).filter(Boolean);
-    const name = form.elements.name.value.trim();
-    const instrument = form.elements.instrument.value.trim();
-    const genres = splitList(form.elements.genres.value);
-    if (!name || !instrument) {
-      showToast("Add your name and an instrument or music role.");
-      form.elements[!name ? "name" : "instrument"].focus();
-      return;
-    }
-    if (!genres.length) {
-      showToast("Add at least one genre to your demo profile.");
-      form.elements.genres.focus();
-      return;
-    }
-
-    demoProfile = {
-      id: "demo-profile",
-      name,
-      location: form.elements.location.value.trim(),
-      instrument,
-      genres,
-      skill: form.elements.skill.value,
-      roles: [form.elements.role.value],
-      lookingFor: splitList(form.elements.lookingFor.value),
-      artists: splitList(form.elements.artists.value),
-      bio: form.elements.bio.value.trim() || "Open to meeting local musicians and making something together.",
-      initials: name.split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase(),
-      color: "lilac"
-    };
-    const existingIndex = data.musicians.findIndex((person) => person.id === demoProfile.id);
-    if (existingIndex === -1) data.musicians.push(demoProfile);
-    else data.musicians[existingIndex] = demoProfile;
-
-    document.querySelector("#demo-profile-dialog").close();
-    fillFilters();
-    renderDemoProfile();
-    renderMatches();
-    renderMusicians();
-    renderGrowthStats();
-    showToast(existingIndex === -1 ? "Your demo profile is in the community!" : "Your demo profile has been updated.");
-  });
-
   function renderMusicians() {
     const query = document.querySelector("#musician-search").value.trim().toLowerCase();
     const instrument = document.querySelector("#instrument-filter").value;
@@ -320,27 +134,6 @@
     genreFilter.innerHTML = '<option value="">All genres</option>' + genres.map((item) => `<option>${escapeHtml(item)}</option>`).join("");
     instrumentFilter.value = selectedInstrument;
     genreFilter.value = selectedGenre;
-  }
-
-  function renderGrowthStats() {
-    document.querySelector("#growth-musicians").textContent = formatCount(data.growth.musicians + (demoProfile ? 1 : 0));
-    document.querySelector("#growth-collaborations").textContent = formatCount(data.growth.collaborations);
-    document.querySelector("#growth-communities").textContent = formatCount(data.growth.communities);
-    document.querySelector("#growth-events").textContent = formatCount(data.growth.events);
-  }
-
-  function updateDemoStats() {
-    const increments = {
-      musicians: Math.floor(Math.random() * 3) + 1,
-      collaborations: Math.floor(Math.random() * 3) + 1,
-      communities: 1,
-      events: 1
-    };
-    const keys = Object.keys(increments);
-    const key = keys[Math.floor(Math.random() * keys.length)];
-    data.growth[key] += increments[key];
-    renderGrowthStats();
-    window.setTimeout(updateDemoStats, 12000 + Math.random() * 18000);
   }
 
   function renderCommunities() {
@@ -393,7 +186,7 @@
     const person = connectedPeople.find((item) => item.id === activeChatId);
     const messages = chatMessages.get(person.id) || [];
     chatWindow.innerHTML = `
-      <div class="chat-header">${initialsAvatar(person.initials, person.color)}<div><strong>${escapeHtml(person.name)}</strong><small>Demo conversation</small></div></div>
+      <div class="chat-header">${initialsAvatar(person.initials, person.color)}<div><strong>${escapeHtml(person.name)}</strong><small>${escapeHtml(person.instrument)} · ${escapeHtml(person.location)}</small></div></div>
       <div class="chat-messages" id="chat-messages" aria-live="polite">
         ${messages.length ? messages.map((message) => `<p class="chat-message ${message.sent ? "is-sent" : ""}">${escapeHtml(message.text)}</p>`).join("") : '<p class="chat-empty">Say hello to start the conversation.</p>'}
       </div>
@@ -469,7 +262,7 @@
     if (connectButton) {
       const id = connectButton.dataset.connect;
       const person = data.musicians.find((item) => item.id === id);
-      if (!person || id === demoProfile?.id) return;
+      if (!person) return;
       if (connected.has(id)) connected.delete(id);
       else connected.add(id);
       const profileConnectButton = document.querySelector(`#musician-dialog [data-connect="${id}"]`);
@@ -482,7 +275,6 @@
       else if (activeChatId === id) activeChatId = null;
       renderMatches();
       renderMusicians();
-      renderConnections();
       renderChats();
       showToast(connected.has(id)
         ? `You’re connected with ${person.name}! Opened in Chats.`
@@ -497,7 +289,6 @@
       if (joined.has(id)) joined.delete(id);
       else joined.add(id);
       renderCommunities();
-      renderConnections();
       showToast(joined.has(id) ? `You joined ${community.name}.` : `You left ${community.name}.`);
       return;
     }
@@ -509,7 +300,6 @@
       if (rsvps.has(id)) rsvps.delete(id);
       else rsvps.add(id);
       renderEvents();
-      renderConnections();
       showToast(rsvps.has(id) ? `You're on the list for ${eventInfo.name}.` : `RSVP removed for ${eventInfo.name}.`);
     }
   });
@@ -519,7 +309,7 @@
     const input = document.querySelector("#idea-input");
     const text = input.value.trim();
     if (!text) return;
-    data.ideas.unshift({ author: demoProfile?.name || "Guest musician", initials: demoProfile?.initials || "G", color: "lilac", time: "just now", text });
+    data.ideas.unshift({ author: "Community member", initials: "C", color: "lilac", time: "just now", text });
     renderIdeas();
     input.value = "";
     showToast("Your idea is out there. Let the collaboration begin!");
@@ -544,7 +334,4 @@
   renderCommunities();
   renderEvents();
   renderIdeas();
-  renderGrowthStats();
-  renderDemoProfile();
-  window.setTimeout(updateDemoStats, 12000 + Math.random() * 18000);
 })();

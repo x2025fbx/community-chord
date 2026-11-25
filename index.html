@@ -23,21 +23,13 @@
         <a class="nav-link" id="communities-nav" href="#communities">Communities</a>
         <a class="nav-link" id="events-nav" href="#events">Events</a>
         <a class="nav-link" href="#chats">Chats</a>
-        <a class="nav-link" href="#profile">My Profile</a>
-        <button class="button button-primary header-membership" id="membership-button" type="button">Membership</button>
-        <button class="button button-primary header-account-button" id="header-signup-button" type="button" data-account-action="signup">Sign up</button>
-        <button class="button button-outline header-account-button" type="button" data-account-action="login">Log in</button>
       </nav>
-      <a class="header-profile" href="#profile" aria-label="View guest profile">
-        <span class="avatar avatar-you">G</span>
-        <span class="header-name">Guest</span>
-      </a>
     </header>
 
     <main id="main">
       <section class="hero page-section" id="home" aria-labelledby="welcome-title">
         <div class="hero-copy">
-          <p class="eyebrow"><span class="live-pulse"></span> YOUR LOCAL MUSIC COMMUNITY · DEMO PREVIEW</p>
+          <p class="eyebrow"><span class="live-pulse"></span> YOUR LOCAL MUSIC COMMUNITY</p>
           <h1 id="welcome-title">Find your people.<br><span>Build your sound.</span></h1>
           <p class="hero-description">Community Chord is a music community for musicians, singers, songwriters, and music lovers. Find people to play with, collaborate on songs, and discover new artists and events.</p>
           <div class="hero-actions">
@@ -62,21 +54,6 @@
           <a href="#matches" class="feature-link">Meet your matches <span aria-hidden="true">→</span></a>
           <span class="feature-index">01 / 04</span>
         </aside>
-      </section>
-
-      <section class="section-block growth-section" id="community-growth" aria-labelledby="growth-title">
-        <div class="growth-copy">
-          <p class="eyebrow">MORE PEOPLE, MORE POSSIBILITIES</p>
-          <h2 id="growth-title">A growing scene makes <span>better music.</span></h2>
-          <p class="section-subtitle">Each new musician brings more potential bandmates, collaborators, and shared ideas. More artists and events give the whole community more to discover.</p>
-          <p class="growth-disclaimer">Fictional demo totals, not live platform data. A count randomly ticks up every 12–30 seconds to simulate activity; listings are only a small sample.</p>
-        </div>
-        <div class="growth-stats" aria-label="Demonstration community statistics">
-          <div class="growth-stat"><strong id="growth-musicians">0</strong><span>musicians</span></div>
-          <div class="growth-stat"><strong id="growth-collaborations">0</strong><span>collaborations</span></div>
-          <div class="growth-stat"><strong id="growth-communities">0</strong><span>communities</span></div>
-          <div class="growth-stat"><strong id="growth-events">0</strong><span>events</span></div>
-        </div>
       </section>
 
       <section class="section-block matches-section" id="matches" aria-labelledby="matches-title">
@@ -179,107 +156,14 @@
         </div>
       </section>
 
-      <section class="profile-section" id="profile" aria-labelledby="profile-title">
-        <div class="profile-identity">
-          <div class="avatar avatar-you profile-avatar" id="profile-avatar">G</div>
-          <div><p class="eyebrow">YOUR ARTIST CARD</p><h2 id="profile-title">Guest musician</h2><p class="profile-location" id="profile-location">Create a demo profile to introduce your sound</p></div>
-        </div>
-        <div class="profile-details">
-          <div><span class="detail-label">I PLAY</span><p id="profile-instruments">Add your instruments to your demo profile</p></div>
-          <div><span class="detail-label">MY SOUND</span><p id="profile-music">Add your favorite genres to your demo profile</p></div>
-          <div><span class="detail-label">ON REPEAT</span><p id="profile-artists">Add your favorite artists to your demo profile</p></div>
-          <div><span class="detail-label">I AM A</span><p id="profile-roles">Singer, songwriter, musician, and more</p></div>
-        </div>
-        <button class="button button-outline" id="profile-action" type="button" data-account-action="signup">Create a demo profile</button>
-         <div class="profile-connections" id="profile-connections" hidden aria-live="polite">
-           <div class="connections-heading">
-             <p class="eyebrow">YOUR MUSIC COMMUNITY</p>
-             <h3>My activity</h3>
-           </div>
-           <div class="profile-activity-grid">
-             <section class="profile-activity-group" aria-labelledby="profile-bandmates-title">
-               <h4 id="profile-bandmates-title">Bandmates</h4>
-               <div class="connections-list" id="connections-list"></div>
-             </section>
-             <section class="profile-activity-group" aria-labelledby="profile-events-title">
-               <h4 id="profile-events-title">Events</h4>
-               <div class="connections-list" id="signed-up-events-list"></div>
-             </section>
-             <section class="profile-activity-group" aria-labelledby="profile-communities-title">
-               <h4 id="profile-communities-title">Communities</h4>
-               <div class="connections-list" id="joined-communities-list"></div>
-             </section>
-           </div>
-         </div>
-      </section>
     </main>
 
     <footer class="site-footer">
       <a class="brand footer-brand" href="#home"><span class="brand-mark" aria-hidden="true">♫</span><span>community<span class="brand-light">chord</span></span></a>
       <p>Made for the love of making music.</p>
-      <span class="footer-note">Student prototype · Demo profiles and statistics only · No real accounts or payments</span>
+      <span class="footer-note">Made for the Halifax music community</span>
     </footer>
-    <dialog class="account-dialog" id="account-dialog" aria-labelledby="account-dialog-title">
-      <div class="account-dialog-heading">
-        <div>
-          <p class="eyebrow">COMMUNITY CHORD</p>
-          <h2 id="account-dialog-title">Log in unavailable</h2>
-        </div>
-        <button class="account-close" type="button" aria-label="Close dialog" data-dialog-close>×</button>
-      </div>
-      <p class="account-dialog-description" id="account-dialog-description">This is a student prototype. Real login is not available.</p>
-      <p class="account-demo-note">No email addresses or passwords are requested or collected. Create a demo profile to try the musician community; it stays only in this page until you refresh.</p>
-      <button class="button button-primary" type="button" data-dialog-close>Got it</button>
-    </dialog>
-    <dialog class="account-dialog demo-profile-dialog" id="demo-profile-dialog" aria-labelledby="demo-profile-title">
-      <div class="account-dialog-heading">
-        <div>
-          <p class="eyebrow">YOUR PLACE IN THE SCENE</p>
-          <h2 id="demo-profile-title">Create a demo profile</h2>
-        </div>
-        <button class="account-close" type="button" aria-label="Close profile form" data-demo-profile-close>×</button>
-      </div>
-      <p class="account-dialog-description">Tell the community what you play and who you hope to meet.</p>
-      <form class="account-form demo-profile-form" id="demo-profile-form">
-        <label for="demo-name">Name</label>
-        <input id="demo-name" name="name" type="text" maxlength="60" autocomplete="off" required>
-        <label for="demo-location">Location <span>(optional)</span></label>
-        <input id="demo-location" name="location" type="text" maxlength="80" autocomplete="off" placeholder="e.g. North End, Halifax">
-        <label for="demo-instrument">Instrument or music role</label>
-        <input id="demo-instrument" name="instrument" type="text" maxlength="60" autocomplete="off" placeholder="e.g. Guitar, Vocals, Producer" required>
-        <label for="demo-genres">Genres <span>(separate with commas)</span></label>
-        <input id="demo-genres" name="genres" type="text" maxlength="120" autocomplete="off" placeholder="e.g. Indie rock, Soul" required>
-        <label for="demo-skill">Skill level</label>
-        <select id="demo-skill" name="skill">
-          <option>Beginner</option><option selected>Intermediate</option><option>Advanced</option>
-        </select>
-        <label for="demo-role">I am a</label>
-        <select id="demo-role" name="role">
-          <option>Musician</option><option>Singer</option><option>Songwriter</option><option>Music lover</option>
-        </select>
-        <label for="demo-looking-for">Looking to meet <span>(optional)</span></label>
-        <input id="demo-looking-for" name="lookingFor" type="text" maxlength="120" autocomplete="off" placeholder="e.g. Drums, Songwriter">
-        <label for="demo-artists">Favorite artists <span>(optional)</span></label>
-        <input id="demo-artists" name="artists" type="text" maxlength="120" autocomplete="off" placeholder="e.g. Big Thief, Alvvays">
-        <label for="demo-bio">A little about your sound <span>(optional)</span></label>
-        <textarea id="demo-bio" name="bio" maxlength="240" rows="3" placeholder="What would you love to play or make?"></textarea>
-        <p class="account-demo-note">Demo only: this profile is held temporarily in this page and clears when you refresh. No account, email, password, or payment information is needed.</p>
-        <button class="button button-primary account-submit" type="submit">Add my demo profile <span aria-hidden="true">↗</span></button>
-      </form>
-    </dialog>
     <dialog class="account-dialog musician-profile-dialog" id="musician-dialog" aria-labelledby="musician-dialog-title"></dialog>
-    <dialog class="account-dialog membership-dialog" id="membership-dialog" aria-labelledby="membership-title">
-      <div class="account-dialog-heading">
-        <div>
-          <p class="eyebrow">COMMUNITY CHORD</p>
-          <h2 id="membership-title">Membership</h2>
-        </div>
-        <button class="account-close" id="membership-close" type="button" aria-label="Close membership notice">×</button>
-      </div>
-      <p class="account-dialog-description">This is a student prototype. You cannot view or buy a membership.</p>
-      <p class="account-demo-note">Membership plans and purchasing are unavailable. No payment details are collected and no charge will be made.</p>
-      <button class="button button-primary" id="membership-purchase" type="button">Got it</button>
-    </dialog>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </body>
 </html>
