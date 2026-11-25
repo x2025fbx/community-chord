@@ -61,6 +61,7 @@
     const list = document.querySelector("#connections-list");
     const eventsList = document.querySelector("#signed-up-events-list");
     const communitiesList = document.querySelector("#joined-communities-list");
+    renderChats();
     if (!demoProfile) {
       panel.hidden = true;
       list.innerHTML = "";
@@ -80,6 +81,7 @@
             <h4>${escapeHtml(person.name)}</h4>
             <p>${escapeHtml(person.instrument)} · ${escapeHtml(person.location)}</p>
           </div>
+          <button class="connection-chat-button" type="button" data-open-chat="${escapeHtml(person.id)}">Chat</button>
         </article>
       `).join("")
       : '<p class="connections-empty">No connected bandmates yet.</p>';
@@ -476,6 +478,8 @@
         profileConnectButton.classList.toggle("button-primary", !connected.has(id));
         profileConnectButton.textContent = connected.has(id) ? "Connected ✓" : `Connect with ${person.name}`;
       }
+      if (connected.has(id)) activeChatId = id;
+      else if (activeChatId === id) activeChatId = null;
       renderMatches();
       renderMusicians();
       renderConnections();
