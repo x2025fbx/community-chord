@@ -1,5 +1,11 @@
-// Community Chord sample content.
+// Fictional sample content for the Community Chord prototype.
 window.COMMUNITY_CHORD_DATA = {
+  growth: {
+    musicians: 12480,
+    collaborations: 8420,
+    communities: 1240,
+    events: 3680
+  },
   currentUser: {
     name: "Jordan Lee",
     instruments: ["Guitar"],
@@ -35,7 +41,7 @@ window.COMMUNITY_CHORD_DATA = {
     { id: "gabriel-ross", name: "Gabriel Ross", instrument: "Trumpet", genres: ["Jazz", "Soul", "Funk"], skill: "Intermediate", location: "Downtown Halifax", artists: ["Roy Hargrove", "Robert Glasper"], lookingFor: ["Keys", "Bass"], initials: "GR", color: "orange", bio: "Trumpet player looking for a small group to explore jazz standards and new grooves." }
   ],
   communities: [
-    { id: "hfx-indie", name: "Halifax Indie Collective", category: "INDIE ROCK · HALIFAX", members: 1284, description: "For bedroom recordings, basement shows, and the people who make them happen.", color: "community-purple", mark: "✳" },
+    { id: "hfx-indie", name: "Halifax Indie Collective", category: "INDIE ROCK · HALIFAX", members: 1284, description: "For bedroom demos, basement shows, and the people who make them happen.", color: "community-purple", mark: "✳" },
     { id: "dream-pop", name: "Dream Pop Daydreamers", category: "DREAM POP · ONLINE + HALIFAX", members: 1176, description: "Soft focus, big reverb, and a community for making hazy things together.", color: "community-blue", mark: "☾" },
     { id: "song-circle", name: "The Halifax Song Circle", category: "SONGWRITING · HRM", members: 1132, description: "Trade a verse, find a co-writer, and get that half-finished song unstuck.", color: "community-orange", mark: "✎" },
     { id: "celtic-jammers", name: "Celtic Kitchen Sessions", category: "FOLK · CELTIC · HRM", members: 1219, description: "For fiddle tunes, guitar players, and welcoming jam nights across Halifax.", color: "community-purple", mark: "♪" },
@@ -48,7 +54,7 @@ window.COMMUNITY_CHORD_DATA = {
     { id: "bedford-acoustic", name: "Bedford Acoustic Sessions", category: "ACOUSTIC · SONGWRITING · BEDFORD", members: 1097, description: "Low-key acoustic meetups for works in progress and new collaborations.", color: "community-orange", mark: "♫" },
     { id: "hrm-electronic", name: "HRM Electronic Producers", category: "ELECTRONIC · PRODUCERS · ONLINE", members: 1318, description: "Trade feedback, find vocal collaborators, and share new sounds in progress.", color: "community-purple", mark: "◉" },
     { id: "halifax-jazz-lab", name: "The Halifax Jazz Lab", category: "JAZZ · IMPROV · DARTMOUTH", members: 1164, description: "A welcoming spot for improvisers, small ensembles, and curious beginners.", color: "community-blue", mark: "♬" },
-    { id: "indie-songwriters", name: "Atlantic Indie Songwriters", category: "INDIE · SONGWRITING · ATLANTIC CANADA", members: 1231, description: "Share rough recordings, swap honest feedback, and find your next co-writer.", color: "community-purple", mark: "✎" }
+    { id: "indie-songwriters", name: "Atlantic Indie Songwriters", category: "INDIE · SONGWRITING · ATLANTIC CANADA", members: 1231, description: "Share demos, swap honest feedback, and find your next co-writer.", color: "community-purple", mark: "✎" }
   ],
   events: [
     { id: "porch-sessions", day: "29", month: "NOV", name: "Porchlight Sessions", venue: "The Lantern · Halifax", detail: "Local artists · Doors at 7:30", tag: "LIVE MUSIC" },
@@ -60,7 +66,7 @@ window.COMMUNITY_CHORD_DATA = {
     { id: "winter-song-circle", day: "20", month: "DEC", name: "Winter Song Circle", venue: "The Local · Halifax", detail: "Bring an original or a favorite · Starts at 6:30", tag: "SONGWRITING" },
     { id: "new-year-jam", day: "27", month: "DEC", name: "Year-End Open Jam", venue: "Dartmouth Community Arts · Dartmouth", detail: "All styles welcome · Doors at 7:00", tag: "JAM SESSION" },
     { id: "first-friday", day: "03", month: "JAN", name: "First Friday: Local Sounds", venue: "The Lantern · Halifax", detail: "Three local acts · Music starts at 8:00", tag: "LIVE MUSIC" },
-    { id: "listening-room", day: "10", month: "JAN", name: "Listening Room", venue: "North End Bookshop · Halifax", detail: "Share a rough mix and get friendly feedback.", tag: "COMMUNITY" }
+    { id: "demo-listening", day: "10", month: "JAN", name: "Demo Listening Room", venue: "North End Bookshop · Halifax", detail: "Share a rough mix and get friendly feedback.", tag: "COMMUNITY" }
   ],
   ideas: [
     { author: "Maya Chen", initials: "MC", color: "coral", time: "12 min ago", text: "I have a chorus stuck in my head that needs a fuzzy guitar line. Anyone want to trade voice notes?" },
@@ -68,7 +74,7 @@ window.COMMUNITY_CHORD_DATA = {
     { author: "Nina Brooks", initials: "NB", color: "gold", time: "42 min ago", text: "Wrote a bass line that needs a soft, hazy guitar part. Anyone want to trade voice memos?" },
     { author: "Priya Nair", initials: "PN", color: "lilac", time: "1 hr ago", text: "I have a half-finished ambient beat looking for a vocalist who likes space and slow builds." },
     { author: "Tessa MacLeod", initials: "TM", color: "lilac", time: "2 hr ago", text: "Anyone up for trying a fiddle tune over a lo-fi drum pattern? Could be fun." },
-    { author: "Jordan Baptiste", initials: "JB", color: "teal", time: "3 hr ago", text: "Looking for a singer to add a hook to a mellow, soul-inspired track." },
+    { author: "Jordan Baptiste", initials: "JB", color: "teal", time: "3 hr ago", text: "Looking for a singer to add a hook to a mellow, soul-inspired demo." },
     { author: "Ella Thompson", initials: "ET", color: "coral", time: "5 hr ago", text: "I have a chorus but no second verse. Happy to co-write over coffee this week." },
     { author: "Noah Kim", initials: "NK", color: "orange", time: "Yesterday", text: "Putting together a small keys-and-sax session. Any improvisers around Dartmouth?" },
     { author: "Sophie LeBlanc", initials: "SL", color: "gold", time: "Yesterday", text: "Would love to find a guitarist for a few stripped-back folk songs at an open mic." }

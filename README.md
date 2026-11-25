@@ -1,18 +1,22 @@
 # Community Chord
 
-Community Chord is a music community for musicians, singers, songwriters, and music lovers to find people to play with, collaborate on music, and discover artists and events.
+Community Chord is a student-prototype music community for musicians, singers, songwriters, and music lovers to find people to play with, collaborate on music, and discover artists and events.
 
 ## Live website
 
-Explore the site at **[x2025fbx.github.io/community-chord](https://x2025fbx.github.io/community-chord/)**.
+Explore the prototype at **[x2025fbx.github.io/community-chord](https://x2025fbx.github.io/community-chord/)**.
 
 ## Features
 
 - Discover musicians with search and instrument, genre, and skill filters.
-- Open full musician profiles, browse suggested matches, and make connections.
+- Open full musician profiles, browse suggested matches, and make temporary demo connections.
+- Create or edit a demo musician profile without an account, email address, or password.
 - Join music communities, RSVP to events, and share collaboration ideas.
-- Chat with connected musicians.
+- See connected bandmates, signed-up events, and joined communities in your demo profile.
+- See clearly labeled illustrative community-growth statistics and sample community activity.
+- Watch the fictional demo totals tick upward periodically; they reset when the page is refreshed.
 - Expand the musician, communities, and events previews to see all available listings, then collapse them with “View less.”
+- View the membership notice; no real payments are processed.
 - Use a responsive interface designed for desktop and mobile screens.
 
 ## Run locally
@@ -23,7 +27,7 @@ Open `index.html` in a modern browser. No build step, server, database, framewor
 
 - `index.html` contains the page structure and content sections.
 - `styles.css` contains the responsive visual design.
-- `data.js` contains the site's profiles, communities, events, and starter ideas.
+- `data.js` contains fictional sample profiles, communities, events, and starter ideas.
 - `app.js` implements search, filters, matches, connections, community joins, event RSVPs, and idea sharing.
 
-Connections, community joins, event RSVPs, chats, and shared ideas are interactive client-side experiences and reset when the page is refreshed. This front end does not collect passwords or payment information.
+This is a front-end student prototype. Demo profiles, connections, community joins, event RSVPs, and shared ideas exist only in the current page and are cleared when it is refreshed. The musician profiles, community activity, events, collaborations, and growth figures are fictional sample content, not live platform statistics. There is no backend, real account or login functionality, password collection, or payment processing.
