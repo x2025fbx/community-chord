@@ -483,8 +483,9 @@
       renderMatches();
       renderMusicians();
       renderConnections();
+      renderChats();
       showToast(connected.has(id)
-        ? `You’re connected with ${person.name}!`
+        ? `You’re connected with ${person.name}! Opened in Chats.`
         : `Connection with ${person.name} removed.`);
       return;
     }
